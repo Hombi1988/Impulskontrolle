@@ -3,7 +3,7 @@
 // Felder pro Übung (nur id und titel sind Pflicht):
 //   id          eindeutig, nie mehr ändern (daran hängen Bewertungen und Statistik)
 //   titel       Name der Übung
-//   bild        Bilddatei im Ordner img/
+//   bild        Bilddatei (liegt neben index.html)
 //   haeufigkeit z. B. "Täglich 3 Minuten"
 //   intro       Liste von Absätzen vor den Schritten
 //   schritte    Liste: Ablauf
@@ -13,7 +13,7 @@
 
 window.UEBUNGEN = [
   {
-    id: 'ampel', titel: 'Das Ampel-Spiel 🚦', bild: 'img/ampel.jpg',
+    id: 'ampel', titel: 'Das Ampel-Spiel 🚦', bild: 'ampel.jpg',
     intro: ['Dein Hund lernt, dass Ziehen nicht schneller ans Ziel führt.'],
     schritte: [
       'Grüne Ampel: Leine locker, ihr geht weiter.',
@@ -23,7 +23,7 @@ window.UEBUNGEN = [
     schluss: 'Später kannst du das auch vor interessanten Stellen üben.'
   },
   {
-    id: 'leckerli-jackpot', titel: 'Der Leckerli-Jackpot', bild: 'img/leckerli-jackpot.jpg',
+    id: 'leckerli-jackpot', titel: 'Der Leckerli-Jackpot', bild: 'leckerli-jackpot.jpg',
     schritte: [
       'Verstecke 5–10 kleine Leckerlis im Gras.',
       'Gib ein Signal wie «Such!».',
@@ -33,7 +33,7 @@ window.UEBUNGEN = [
     schluss: 'Das trainiert auch das Umschalten zwischen Aktivität und Ruhe.'
   },
   {
-    id: 'tueren', titel: 'Das Warten an Türen', bild: 'img/tueren.jpg',
+    id: 'tueren', titel: 'Das Warten an Türen', bild: 'tueren.jpg',
     schritte: [
       'Öffne die Tür einen Spalt.',
       'Will er hinausstürmen, schliesst du sie ruhig wieder.',
@@ -43,7 +43,7 @@ window.UEBUNGEN = [
     schluss: 'Nicht als Gehorsamstest, sondern als kleine Selbstkontrollübung.'
   },
   {
-    id: 'name-test', titel: 'Der Name-ist-wichtig-Test', bild: 'img/name-test.jpg',
+    id: 'name-test', titel: 'Der Name-ist-wichtig-Test', bild: 'name-test.jpg',
     schritte: [
       'Sage seinen Namen genau einmal.',
       'Schaut er dich an, belohne ihn.',
@@ -53,7 +53,7 @@ window.UEBUNGEN = [
     schluss: 'Bei Hundesichtungen zunächst nur auf einer Distanz üben, auf der er noch reagieren kann.'
   },
   {
-    id: 'versteckspiel', titel: 'Das Versteckspiel', bild: 'img/versteckspiel.jpg',
+    id: 'versteckspiel', titel: 'Das Versteckspiel', bild: 'versteckspiel.jpg',
     schritte: [
       'Verstecke dich hinter einem Baum oder einer Ecke, während er sicher bei dir ist.',
       'Rufe ihn.',
@@ -63,7 +63,7 @@ window.UEBUNGEN = [
     schluss: 'Das fördert die Orientierung an dir.'
   },
   {
-    id: 'futterbeutel', titel: 'Das Futterbeutel-Spiel', bild: 'img/futterbeutel.jpg',
+    id: 'futterbeutel', titel: 'Das Futterbeutel-Spiel', bild: 'futterbeutel.jpg',
     schritte: [
       'Zeige ihm einen Futterbeutel.',
       'Lass ihn kurz warten.',
@@ -73,7 +73,7 @@ window.UEBUNGEN = [
     ]
   },
   {
-    id: 'rueckwaerts', titel: 'Das Rückwärtslaufen', bild: 'img/rueckwaerts.jpg',
+    id: 'rueckwaerts', titel: 'Das Rückwärtslaufen', bild: 'rueckwaerts.jpg',
     schritte: [
       'Laufe langsam rückwärts.',
       'Lock ihn mit einer freundlichen Stimme zu dir.',
@@ -83,7 +83,7 @@ window.UEBUNGEN = [
     schluss: 'Das ist auch eine gute Ergänzung zu eurem bereits funktionierenden Weglauf-Spiel.'
   },
   {
-    id: 'parcours', titel: 'Der Impulskontroll-Parcours', bild: 'img/parcours.jpg',
+    id: 'parcours', titel: 'Der Impulskontroll-Parcours', bild: 'parcours.jpg',
     intro: ['Baue einen kleinen Parcours:'],
     schritte: [
       'Um ein Hütchen laufen.',
@@ -95,7 +95,7 @@ window.UEBUNGEN = [
     schluss: 'Nicht Geschwindigkeit, sondern kontrolliertes Arbeiten belohnen.'
   },
   {
-    id: 'spielzeug-aus', titel: 'Das Spielzeug-aus-Spiel', bild: 'img/spielzeug-aus.jpg',
+    id: 'spielzeug-aus', titel: 'Das Spielzeug-aus-Spiel', bild: 'spielzeug-aus.jpg',
     intro: ['Besonders gut für Hunde, die gerne spielen.'],
     schritte: [
       'Spiele kurz mit ihm.',
@@ -107,7 +107,7 @@ window.UEBUNGEN = [
     schluss: 'Er lernt, dass Aufhören nicht bedeutet, dass der Spass vorbei ist.'
   },
   {
-    id: 'beobachten-sitzen', titel: 'Das Beobachten im Sitzen', bild: 'img/beobachten-sitzen.jpg',
+    id: 'beobachten-sitzen', titel: 'Das Beobachten im Sitzen', bild: 'beobachten-sitzen.jpg',
     intro: ['Setze dich mit ihm an einen ruhigen Ort.'],
     schritte: [
       'Er darf Menschen, Fahrräder und andere Reize beobachten.',
@@ -117,7 +117,7 @@ window.UEBUNGEN = [
     ]
   },
   {
-    id: 'drei-leckerli', titel: 'Das Drei-Leckerli-Spiel', bild: 'img/drei-leckerli.jpg',
+    id: 'drei-leckerli', titel: 'Das Drei-Leckerli-Spiel', bild: 'drei-leckerli.jpg',
     schritte: [
       'Lege drei Leckerlis in etwas Abstand zueinander.',
       'Lass ihn das erste suchen.',
@@ -128,7 +128,7 @@ window.UEBUNGEN = [
     schluss: 'Du trainierst damit das Wechseln zwischen Aktivität und Warten.'
   },
   {
-    id: 'ruhe-signal', titel: 'Das Ruhe-Signal', bild: 'img/ruhe-signal.jpg',
+    id: 'ruhe-signal', titel: 'Das Ruhe-Signal', bild: 'ruhe-signal.jpg',
     schritte: [
       'Setze dich mit ihm an einen ruhigen Ort.',
       'Belohne ihn, wenn er sich entspannt hinlegt.',
@@ -138,7 +138,7 @@ window.UEBUNGEN = [
     ]
   },
   {
-    id: 'handtarget', titel: 'Das Handtarget – «Touch»', bild: 'img/handtarget.jpg', nummeriert: true,
+    id: 'handtarget', titel: 'Das Handtarget – «Touch»', bild: 'handtarget.jpg', nummeriert: true,
     intro: ['Ziel: Dein Hund lernt, sich aktiv zu dir zu bewegen.'],
     schritte: [
       'Halte deine offene Hand vor seine Nase.',
@@ -150,7 +150,7 @@ window.UEBUNGEN = [
     schluss: 'Das ist später eine tolle Möglichkeit, seine Aufmerksamkeit umzulenken.'
   },
   {
-    id: 'leckerli-boden', titel: 'Das Leckerli-am-Boden-Spiel', bild: 'img/leckerli-boden.jpg', nummeriert: true,
+    id: 'leckerli-boden', titel: 'Das Leckerli-am-Boden-Spiel', bild: 'leckerli-boden.jpg', nummeriert: true,
     intro: ['Ziel: Nicht alles sofort nehmen, was interessant ist.'],
     schritte: [
       'Lass ein Leckerli auf den Boden fallen und decke es mit deiner Hand ab.',
@@ -161,7 +161,7 @@ window.UEBUNGEN = [
     schluss: 'Wichtig: Er soll nicht lernen, dass er sich das Leckerli irgendwann doch selbst holen kann.'
   },
   {
-    id: 'richtungswechsel', titel: 'Das Richtungswechsel-Spiel', bild: 'img/richtungswechsel.jpg',
+    id: 'richtungswechsel', titel: 'Das Richtungswechsel-Spiel', bild: 'richtungswechsel.jpg',
     intro: ['Ziel: Dein Hund achtet darauf, wohin du gehst.'],
     schritte: [
       'Laufe geradeaus.',
@@ -172,7 +172,7 @@ window.UEBUNGEN = [
     schluss: 'Später kannst du ein Signal wie «Mit mir!» einführen.'
   },
   {
-    id: 'spielzeug-frust', titel: 'Das Spielzeug-Frust-Spiel', bild: 'img/spielzeug-frust.jpg', nummeriert: true,
+    id: 'spielzeug-frust', titel: 'Das Spielzeug-Frust-Spiel', bild: 'spielzeug-frust.jpg', nummeriert: true,
     intro: ['Ziel: Begeisterung kontrollieren, obwohl etwas Tolles passiert.'],
     schritte: [
       'Nimm einen Ball.',
@@ -184,7 +184,7 @@ window.UEBUNGEN = [
     schluss: 'Wenn er schon beim ersten Versuch explodiert, mach die Bewegung kleiner.'
   },
   {
-    id: 'blickkontakt', titel: 'Der freiwillige Blickkontakt', bild: 'img/blickkontakt.jpg',
+    id: 'blickkontakt', titel: 'Der freiwillige Blickkontakt', bild: 'blickkontakt.jpg',
     intro: ['Ziel: Dein Hund soll dich von selbst anschauen.',
             'Gehe an einen interessanten Ort, beispielsweise in die Nähe des Tierparks.'],
     schritte: [
@@ -196,7 +196,7 @@ window.UEBUNGEN = [
     schluss: 'Das ist eine besonders wichtige Grundlage für Hundebegegnungen.'
   },
   {
-    id: 'decke-draussen', titel: 'Das Deckentraining draussen', bild: 'img/decke-draussen.jpg', nummeriert: true,
+    id: 'decke-draussen', titel: 'Das Deckentraining draussen', bild: 'decke-draussen.jpg', nummeriert: true,
     intro: ['Ziel: Auch bei interessanter Umgebung zur Ruhe kommen.'],
     schritte: [
       'Nimm eine kleine Decke mit.',
@@ -208,7 +208,7 @@ window.UEBUNGEN = [
     schluss: 'Nicht erzwingen. Er soll lernen, dass er auch draussen entspannen kann.'
   },
   {
-    id: 'schau-weg', titel: 'Das «Schau und wieder weg»-Spiel', bild: 'img/schau-weg.jpg', nummeriert: true,
+    id: 'schau-weg', titel: 'Das «Schau und wieder weg»-Spiel', bild: 'schau-weg.jpg', nummeriert: true,
     intro: ['Ziel: Andere Hunde wahrnehmen, ohne sich darin zu verlieren.',
             'Das ist für euch vermutlich eine der wertvollsten Übungen.'],
     schritte: [
@@ -221,7 +221,7 @@ window.UEBUNGEN = [
     schluss: 'Wichtig: Nicht warten, bis er sich festgestarrt hat. Beginne mit ausreichend Abstand.'
   },
   {
-    id: 'erst-schauen', titel: 'Das «Erst schauen, dann los»-Spiel', bild: 'img/erst-schauen.jpg', nummeriert: true,
+    id: 'erst-schauen', titel: 'Das «Erst schauen, dann los»-Spiel', bild: 'erst-schauen.jpg', nummeriert: true,
     haeufigkeit: 'Täglich 3–5 Minuten',
     intro: ['Übe zunächst ohne andere Hunde.'],
     schritte: [
@@ -234,7 +234,7 @@ window.UEBUNGEN = [
     schluss: 'Er lernt: Nicht Drängeln, sondern Selbstkontrolle bringt mich ans Ziel.'
   },
   {
-    id: 'freigabesignal', titel: 'Das Freigabesignal', bild: 'img/freigabesignal.jpg', nummeriert: true,
+    id: 'freigabesignal', titel: 'Das Freigabesignal', bild: 'freigabesignal.jpg', nummeriert: true,
     haeufigkeit: 'Täglich 3 Minuten',
     intro: ['Das ist eine meiner Lieblingsübungen für deinen Fall.'],
     schritte: [
@@ -254,7 +254,7 @@ window.UEBUNGEN = [
     schluss: 'Nicht minutenlang warten lassen. Lieber viele kurze Erfolge.'
   },
   {
-    id: 'hunde-beobachtung', titel: 'Das Hunde-Beobachtungstraining', bild: 'img/hunde-beobachtung.jpg', nummeriert: true,
+    id: 'hunde-beobachtung', titel: 'Das Hunde-Beobachtungstraining', bild: 'hunde-beobachtung.jpg', nummeriert: true,
     haeufigkeit: '2–3 Mal pro Woche',
     intro: ['Das ist die wichtigste Übung für euch.',
             'Du brauchst dafür einen bekannten Hund und dessen Besitzer.'],
@@ -269,7 +269,7 @@ window.UEBUNGEN = [
     schluss: 'So lernt er, dass er seine Begeisterung kontrollieren kann und trotzdem Hundekontakt bekommt.'
   },
   {
-    id: 'umorientierung', titel: 'Das Umorientierungsspiel', bild: 'img/umorientierung.jpg',
+    id: 'umorientierung', titel: 'Das Umorientierungsspiel', bild: 'umorientierung.jpg',
     haeufigkeit: 'Bei jedem Spaziergang',
     schritte: [
       'Laufe ganz normal.',
