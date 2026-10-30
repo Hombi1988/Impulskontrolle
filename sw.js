@@ -1,5 +1,5 @@
 // Service Worker: Offline-Betrieb
-const VERSION = 'ik-v6';
+const VERSION = 'ik-v8';
 const FILES = ['./', 'index.html', 'uebungen.js', 'manifest.json', 'icon-128.png',
   'icon-180.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png',
   'ampel.jpg',

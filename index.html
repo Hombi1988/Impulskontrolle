@@ -166,7 +166,8 @@ details.ex .ex-img{border-radius:12px;margin-bottom:4px}
 .r2{background:var(--gold-l);color:#A86C10}
 .r3{background:var(--accent-l);color:var(--accent-d)}
 .r4{background:var(--accent);color:#fff}
-.skip{display:block;margin:8px auto 0;color:var(--muted);font-weight:600}
+.skip{display:block;width:100%;margin-top:10px;border:1.5px solid var(--line);background:var(--soft);color:var(--ink);border-radius:16px;padding:13px;font-size:15px;font-weight:650;transition:transform .1s}
+.skip:active{transform:scale(.98)}
 
 /* Modal */
 .modal-bg{position:fixed;inset:0;background:rgba(20,30,28,.45);z-index:30;display:flex;align-items:flex-end;justify-content:center;animation:fade .2s}
@@ -221,7 +222,7 @@ const $ = s => document.querySelector(s);
 const RATINGS = [null,
   { t: 'Nein', e: '😣', c: 'r1' },
   { t: 'Naja', e: '😐', c: 'r2' },
-  { t: 'Super', e: '🤩', c: 'r4' }];
+  { t: 'Super', e: '🤩', c: 'r3' }];
 const LEVELS = ['Welpe', 'Schnüffelnase', 'Lehrling', 'Geduldsprobe', 'Wartekünstler',
   'Ruhepol', 'Selbstbeherrscher', 'Fels in der Brandung', 'Zen-Hund', 'Impuls-Meister'];
 
@@ -352,7 +353,7 @@ function renderTraining() {
     ${first ? '<div class="swipe-hint">Geht gerade nicht? Karte zur Seite wischen.</div>' : ''}
     <div class="rq">Wie hat's geklappt?</div>
     <div class="rate">${[1, 2, 3].map(i => `<button class="${RATINGS[i].c}" data-rate="${i}"><span class="e">${RATINGS[i].e}</span>${RATINGS[i].t}</button>`).join('')}</div>
-    <button class="link skip" data-act="skip">Geht gerade nicht – überspringen</button>
+    <button class="skip" data-act="skip">↷ Geht gerade nicht – überspringen</button>
   </div>`;
   bindSwipe($('#excard'));
 }
