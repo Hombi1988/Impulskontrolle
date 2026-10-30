@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#2E7D6B"/>
+  <!-- Knochen (die Versuchung) -->
+  <g fill="#E8A33D">
+    <rect x="214" y="92" width="84" height="26" rx="13"/>
+    <circle cx="214" cy="92" r="17"/><circle cx="214" cy="118" r="17"/>
+    <circle cx="298" cy="92" r="17"/><circle cx="298" cy="118" r="17"/>
+  </g>
+  <!-- Ohren -->
+  <path d="M176 200 C120 190 86 250 98 320 C104 360 146 366 166 332 C182 304 186 252 196 222 Z" fill="#E8A33D"/>
+  <path d="M336 200 C392 190 426 250 414 320 C408 360 366 366 346 332 C330 304 326 252 316 222 Z" fill="#E8A33D"/>
+  <!-- Kopf -->
+  <ellipse cx="256" cy="296" rx="112" ry="114" fill="#FFFFFF"/>
+  <!-- Augen, schauen nach oben -->
+  <circle cx="214" cy="270" r="15" fill="#1D3B36"/><circle cx="218" cy="264" r="5" fill="#FFFFFF"/>
+  <circle cx="298" cy="270" r="15" fill="#1D3B36"/><circle cx="302" cy="264" r="5" fill="#FFFFFF"/>
+  <!-- Schnauze -->
+  <ellipse cx="256" cy="342" rx="58" ry="42" fill="#F3EEE4"/>
+  <path d="M230 318 Q256 306 282 318 Q274 342 256 346 Q238 342 230 318 Z" fill="#1D3B36"/>
+  <path d="M256 346 V360 M256 360 Q242 374 228 364 M256 360 Q270 374 284 364" stroke="#1D3B36" stroke-width="7" stroke-linecap="round" fill="none"/>
+</svg>
