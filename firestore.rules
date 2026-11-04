@@ -1,0 +1,82 @@
+rules_version = '2';
+// Sicherheitsregeln für die Impulskontrolle-App
+// MASTER_CODE unten durch deinen eigenen, geheimen Master-Code ersetzen
+// (mindestens 10 Zeichen, z. B. «Luna-Feld-2026-x7»). Ändern = alter Code verliert sofort die Rechte.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function masterCode() { return 'MASTER_CODE'; }
+    function signedIn() { return request.auth != null; }
+    function myRolePath() { return /databases/$(database)/documents/roles/$(request.auth.uid); }
+    function hasRole() { return signedIn() && exists(myRolePath()); }
+    function myRole() { return get(myRolePath()).data; }
+    function isMaster() { return hasRole() && myRole().role == 'master' && myRole().code == masterCode(); }
+    function trainerCodePath(code) { return /databases/$(database)/documents/trainerCodes/$(code); }
+    function isTrainer() {
+      return hasRole() && myRole().role == 'trainer'
+        && exists(trainerCodePath(myRole().code))
+        && get(trainerCodePath(myRole().code)).data.active == true;
+    }
+    function isStaff() { return isMaster() || isTrainer(); }
+    function trainsCourse(courseId) { return isTrainer() && courseId in get(trainerCodePath(myRole().code)).data.courses; }
+
+    // Versionsnummer der Übungen (damit Handys nur bei Änderungen neu laden)
+    match /meta/{docId} {
+      allow read: if signedIn();
+      allow write: if isStaff();
+    }
+
+    // Übungen: alle lesen, nur Master und Trainerin schreiben
+    match /exercises/{id} {
+      allow read: if signedIn();
+      allow write: if isStaff();
+    }
+    match /exerciseImages/{id} {
+      allow read: if signedIn();
+      allow delete: if isStaff();
+      allow create, update: if isStaff() && request.resource.data.data is string
+                            && request.resource.data.data.size() < 900000;
+    }
+
+    // Kurse: alle lesen (für Beitritt per Code)
+    match /courses/{courseId} {
+      allow read: if signedIn();
+      allow create, delete: if isMaster();
+      // Rangliste neu starten / Teilnehmer sperren: Master oder Trainerin dieses Kurses
+      allow update: if isMaster() || (trainsCourse(courseId)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['season', 'removed']));
+
+      // Teilnehmer: jeder schreibt nur seinen eigenen Eintrag, nur erlaubte Felder
+      match /members/{memberId} {
+        allow read: if signedIn();
+        allow create, update: if signedIn() && request.auth.uid == memberId
+          && !(memberId in get(/databases/$(database)/documents/courses/$(courseId)).data.removed)
+          && request.resource.data.keys().hasOnly(['dog', 'status', 'seasonXp', 'season', 'week', 'weekUps', 'updated'])
+          && request.resource.data.dog is string && request.resource.data.dog.size() <= 30
+          && request.resource.data.status is map && request.resource.data.status.size() <= 300
+          && request.resource.data.seasonXp is int && request.resource.data.weekUps is int;
+        allow delete: if isMaster() || trainsCourse(courseId) || (signedIn() && request.auth.uid == memberId);
+      }
+    }
+
+    // Trainer-Codes: nur Master verwaltet; die Trainerin darf ihren eigenen Code lesen
+    match /trainerCodes/{code} {
+      allow read: if isMaster() || (hasRole() && myRole().code == code);
+      allow write: if isMaster();
+    }
+
+    // Freischaltung dieses Handys: nur mit gültigem Master- oder aktivem Trainer-Code
+    match /roles/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow create, update: if signedIn() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['role', 'code', 'created'])
+        && (
+          (request.resource.data.role == 'master' && request.resource.data.code == masterCode())
+          || (request.resource.data.role == 'trainer'
+              && exists(trainerCodePath(request.resource.data.code))
+              && get(trainerCodePath(request.resource.data.code)).data.active == true)
+        );
+      allow delete: if signedIn() && request.auth.uid == uid;
+    }
+  }
+}

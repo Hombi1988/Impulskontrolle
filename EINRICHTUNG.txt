@@ -1,0 +1,60 @@
+IMPULSKONTROLLE PILOT – EINRICHTUNG
+====================================
+Dauer: ca. 10 Minuten (Schätzung). Alles gratis, keine Kreditkarte nötig.
+Hinweis: Die Bezeichnungen in der Firebase-Konsole können leicht abweichen.
+
+1. FIREBASE-PROJEKT ANLEGEN
+   - https://console.firebase.google.com öffnen, mit deinem Google-Konto anmelden
+   - «Projekt hinzufügen», Name z. B. «impulskontrolle-pilot»
+   - Google Analytics: ausschalten
+   - Tarif bleibt «Spark» (gratis). NIE auf «Blaze» wechseln, «Storage» NICHT aktivieren.
+
+2. ANONYME ANMELDUNG EINSCHALTEN
+   - Links «Build» → «Authentication» → «Jetzt starten»
+   - Reiter «Anmeldemethode»: «Anonym» aktivieren und speichern
+     (sonst nichts – E-Mail/Passwort braucht es nicht)
+
+3. DATENBANK ANLEGEN
+   - Links «Build» → «Firestore Database» → «Datenbank erstellen»
+   - Standort in Europa wählen (z. B. europe-west6 Zürich), «Produktionsmodus»
+
+4. SICHERHEITSREGELN UND MASTER-CODE
+   - In «Firestore Database» den Reiter «Regeln» öffnen
+   - Alles löschen und den Inhalt der Datei «firestore.rules» einfügen
+   - MASTER_CODE durch deinen eigenen, geheimen Master-Code ersetzen
+     (mindestens 10 Zeichen, gut aufbewahren – z. B. im Passwort-Manager)
+   - «Veröffentlichen»
+   - Master-Code ändern = hier neuen Code eintragen und veröffentlichen.
+     Alle Handys mit dem alten Code verlieren sofort die Master-Rechte.
+
+5. ZUGANGSDATEN IN DIE APP EINTRAGEN
+   - Zahnrad oben links → «Projekteinstellungen» → unten «Meine Apps» → Symbol </> (Web)
+   - App-Name z. B. «Impulskontrolle», Firebase Hosting NICHT ankreuzen, «App registrieren»
+   - Aus dem angezeigten «firebaseConfig» diese 4 Werte in die Datei «firebase-config.js» kopieren:
+     apiKey, authDomain, projectId, appId
+
+6. AUF GITHUB HOCHLADEN
+   - Neues Repository anlegen, z. B. «ImpulskontrollePilot» (öffentlich)
+   - Alle Dateien aus dem ZIP hochladen (inkl. der angepassten firebase-config.js)
+   - Settings → Pages → Branch «main» → Save
+   - Adresse danach: https://hombi1988.github.io/ImpulskontrollePilot/
+
+7. DICH ALS MASTER FREISCHALTEN
+   - App öffnen → Einstellungen → «Verwaltung für Trainerinnen»
+   - Master-Code eingeben → «Freischalten»
+   - «+ Neuer Kurs» → «Kurs 1». Kurscode und QR-Code erscheinen direkt beim Kurs.
+   - «Startübungen importieren» → die 23 bisherigen Übungen kommen rein.
+     Die Fotos werden aus dem Repository «Impulskontrolle» angezeigt – dieses also NICHT löschen.
+
+8. TRAINERIN FREISCHALTEN
+   - In der Verwaltung «+ Neuer Trainer-Code» → Name und Kurs wählen → Code erscheint
+   - Code der Trainerin geben. Sie gibt ihn in ihrer App unter Einstellungen → «Verwaltung» ein.
+   - «Deaktivieren» entzieht ihr sofort die Rechte.
+
+9. TEILNEHMER
+   - QR-Code des Kurses scannen (oder Kurscode eingeben), Hundename eingeben, fertig.
+
+GUT ZU WISSEN
+   - Freischaltungen gelten pro Handy. Neues Handy oder App-Daten gelöscht → Code nochmals eingeben.
+   - Die Firebase-Zugangsdaten in firebase-config.js sind nicht geheim. Geheim ist nur der Master-Code,
+     und der steht nur in den Sicherheitsregeln in Firebase, nicht auf GitHub.

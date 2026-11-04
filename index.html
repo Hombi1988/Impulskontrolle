@@ -189,6 +189,49 @@ details.ex .ex-img{border-radius:12px;margin-bottom:4px}
   background:var(--ink);color:#fff;padding:11px 16px;border-radius:12px;font-size:14px;z-index:50;
   max-width:calc(100% - 32px);text-align:center;animation:fade .2s}
 .empty{text-align:center;padding:40px 10px;color:var(--muted)}
+.tabs button{font-size:10.5px}
+.code-in{text-transform:uppercase;letter-spacing:2px;font-weight:600}
+.kurs-h{margin-top:18px!important}
+.who{font-size:14px;line-height:1.5;margin-bottom:6px}
+.who .chip{margin:0 4px 0 0}
+.rank{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.rank:last-child{border-bottom:0}
+.rank .pos{width:28px;text-align:center;font-size:18px;color:var(--muted);font-weight:700}
+.rank .nm{flex:1;font-weight:600;min-width:0}
+.rank .nm small{color:var(--muted);font-weight:500}
+.rank .val{font-weight:700;color:var(--gold);white-space:nowrap}
+.rank .val small{color:var(--muted);font-weight:500}
+.rank.me{background:var(--accent-l);margin:0 -14px;padding-left:14px;padding-right:14px;border-radius:10px}
+.mx-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mx{border-collapse:separate;border-spacing:0;font-size:13px}
+.mx th,.mx td{padding:3px}
+.mx thead th{vertical-align:bottom;height:130px}
+.mx thead th span{display:inline-block;writing-mode:vertical-rl;transform:rotate(180deg);font-weight:500;color:var(--muted);font-size:12px;white-space:nowrap;max-height:126px;overflow:hidden;text-overflow:ellipsis}
+.mx .sticky{position:sticky;left:0;background:#fff;text-align:left;font-weight:600;padding-right:10px;white-space:nowrap;max-width:110px;overflow:hidden;text-overflow:ellipsis;z-index:1}
+.mx tr.me .sticky{color:var(--accent-d)}
+.d{display:inline-block;width:18px;height:18px;border-radius:5px;vertical-align:middle}
+.legend .d{width:10px;height:10px;border-radius:3px;margin-right:5px}
+.k0{background:#E4E7EF}.k1{background:var(--red)}.k2{background:var(--gold)}.k3{background:#6FB3A2}.k4{background:var(--accent)}
+.adm-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.adm-row img,.adm-row .noimg{width:52px;height:34px;object-fit:cover;border-radius:6px;flex:none;background:var(--soft);display:flex;align-items:center;justify-content:center}
+.adm-row .t{flex:1;min-width:0;font-weight:600;font-size:14px}
+.adm-row .t small{display:block;color:var(--muted);font-weight:500}
+.adm-row.off .t{opacity:.5}
+.adm-row .acts{display:flex;gap:4px}
+.adm-row .acts button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 8px;font-size:13px;font-weight:600}
+.adm-row .acts button:disabled{opacity:.3}
+.code{font-size:24px;font-weight:800;letter-spacing:3px}
+.qr{width:96px;flex:none}.qr svg{width:100%;height:auto;display:block}
+.exform{text-align:left}
+.exform h3{text-align:center}
+.exform textarea.input{resize:vertical;font-family:inherit;line-height:1.4}
+.check{display:flex;align-items:center;gap:8px;font-size:15px;margin-top:8px}
+.check input{width:20px;height:20px;accent-color:var(--accent)}
+.fimg{border:1.5px dashed var(--line);border-radius:12px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:var(--muted);overflow:hidden;background:var(--soft)}
+.fimg img{width:100%;height:100%;object-fit:cover}
+details.more{margin-bottom:16px}
+details.more summary{font-weight:600;font-size:15px;cursor:pointer}
+.modal{padding-top:22px}
 </style>
 </head>
 <body>
@@ -203,6 +246,7 @@ details.ex .ex-img{border-radius:12px;margin-bottom:4px}
 <nav class="tabs"><div class="tabs-in">
   <button data-tab="home"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>Start</button>
   <button data-tab="stats"><svg viewBox="0 0 24 24"><path d="M5 20V11M12 20V5M19 20v-6"/></svg>Statistik</button>
+  <button data-tab="course"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2c2.4-.3 4.4 1.2 5 4.3"/></svg>Kurs</button>
   <button data-tab="list"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg>Übungen</button>
   <button data-tab="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Einstellungen</button>
 </div></nav>
@@ -210,12 +254,14 @@ details.ex .ex-img{border-radius:12px;margin-bottom:4px}
 <div id="overlay"></div>
 <div id="modal"></div>
 
-<script src="uebungen.js"></script>
+<script src="firebase-config.js"></script>
+<script src="cloud.bundle.js"></script>
 <script>
 'use strict';
 const KEY = 'impulskontrolle.v1';
 const DAY = 864e5;
-const EX = Array.isArray(window.UEBUNGEN) ? window.UEBUNGEN : [];
+let EX = [];      // sichtbare Übungen
+let EX_ALL = [];  // inkl. ausgeblendete (Verwaltung)
 const exById = id => EX.find(e => e.id === id);
 const $ = s => document.querySelector(s);
 
@@ -229,13 +275,15 @@ const LEVELS = ['Welpe', 'Schnüffelnase', 'Lehrling', 'Geduldsprobe', 'Wartekü
 // ---------- Daten ----------
 function defaults() {
   return { dog: '', settings: { onboarded: false, weekGoal: 4, monthGoal: 15 },
-           log: [], sessions: [], ex: {}, xp: 0 };
+           log: [], sessions: [], ex: {}, xp: 0, ups: [],
+           cloud: { courseId: null, courseName: '', code: '', season: 1, seasonBase: 0, uid: '' } };
 }
 let S;
 try {
   const raw = JSON.parse(localStorage.getItem(KEY));
   S = Object.assign(defaults(), raw || {});
   S.settings = Object.assign(defaults().settings, S.settings || {});
+  S.cloud = Object.assign(defaults().cloud, S.cloud || {});
 } catch (e) { S = defaults(); }
 
 function save() {
@@ -369,12 +417,13 @@ function skipAnimated() { const el = $('#excard'); el ? flyOut(el, -window.inner
 function rate(r) {
   if (!T || !T.cur) return;
   const e = T.cur, st = exState(e.id);
-  const before = mastery(e.id), hadAny = st.r.length > 0;
+  const before = mastery(e.id), hadAny = st.r.length > 0, kBefore = status(e.id).k;
   st.r.push(r); if (st.r.length > 10) st.r = st.r.slice(-10);
   st.n++; st.last = Date.now();
   let xp = 10;
   if (hadAny && mastery(e.id) > before + 0.01) xp += 5;   // Fortschritt gibt Bonus
   S.log.push({ t: Date.now(), id: e.id, r, xp });
+  if (status(e.id).k > Math.max(kBefore, 1)) S.ups.push({ t: Date.now(), id: e.id });  // Stufen-Aufstieg
   S.xp += xp;
   T.done.push({ id: e.id, r, xp }); T.xp += xp;
   save();
@@ -424,6 +473,7 @@ function endTraining() {
   S.xp += bonus;
   S.sessions.push({ start: t.start, end: Date.now(), n: t.done.length, xp: t.xp, bonus });
   save();
+  syncMember();
   const lv = levelInfo();
   const up = lv.l > t.lvl0;
   const praise = ['Stark gemacht!', 'Gute Runde!', 'Weiter so!', 'Sauber trainiert!'][Math.floor(Math.random() * 4)];
@@ -517,7 +567,7 @@ function chart(st, kind) {
 let tab = 'home', statKind = 'week', statOff = 0;
 
 function viewHome() {
-  if (!EX.length) return `<div class="empty">Noch keine Übungen hinterlegt.</div>`;
+  if (!EX.length) return exLoaded ? `<div class="empty">Noch keine Übungen vorhanden.<br><span class="small">Die Trainerin erfasst sie in der Verwaltung.</span></div>` : `<div class="empty">Übungen werden geladen …</div>`;
   const lv = levelInfo(), last = lastTraining();
   const overdue = last && daysSince(last) >= 2;
   const wk = periodStats('week', 0);
@@ -582,14 +632,14 @@ function viewStats() {
 }
 
 function viewList() {
-  if (!EX.length) return `<div class="empty">Noch keine Übungen hinterlegt.</div>`;
+  if (!EX.length) return `<div class="empty">Noch keine Übungen vorhanden.</div>`;
   return `
     <p class="muted small" style="margin-top:0">${EX.length} Übungen · ${activeCount()} im Training</p>
     ${EX.map(e => {
       const st = status(e.id), s = S.ex[e.id] || {}, off = !!s.off;
       const meta = s.n ? `${s.n}× geübt · zuletzt ${relDay(s.last)}` : 'noch nie geübt';
       return `<details class="ex ${off ? 'off' : ''}"><summary><span class="t">${esc(e.titel)}<small>${off ? 'ausgeschaltet' : meta}</small></span><span class="chip st-${st.c}" style="margin:0">${st.t}</span></summary>
-        <div class="body">${exHTML(e, true)}
+        <div class="body">${exHTML(e, true)}${whoCanHTML(e.id)}
           <label class="toggle"><span>Im Training verwenden</span><span class="sw"><input type="checkbox" data-toggle="${esc(e.id)}" ${off ? '' : 'checked'}><span></span></span></label>
           ${s.n ? `<button class="link small" data-reset-ex="${esc(e.id)}" style="padding-left:0;color:var(--muted)">Bewertungen dieser Übung zurücksetzen</button>` : ''}
         </div></details>`;
@@ -606,20 +656,24 @@ function viewSettings() {
       <div class="field"><label for="wgSet">Wochenziel</label><select class="input" id="wgSet">${[1, 2, 3, 4, 5, 6, 7].map(n => opt(n, S.settings.weekGoal, () => 'Tage')).join('')}</select></div>
       <div class="field"><label for="mgSet">Monatsziel</label><select class="input" id="mgSet">${[4, 8, 10, 12, 15, 20, 25].map(n => opt(n, S.settings.monthGoal, () => 'Tage')).join('')}</select></div>
     </div>
+    <h2>Kurs</h2>
+    <p class="muted small" style="margin-top:0">${S.cloud.courseId ? `Du bist im Kurs «${esc(S.cloud.courseName)}».` : 'Du bist in keinem Kurs.'} <button class="link small" data-tab="course" style="padding:0">Zum Kurs</button></p>
     <h2>Daten</h2>
-    <p class="muted small" style="margin-top:0">Alles bleibt nur auf diesem Handy gespeichert. Mit einer Sicherung kannst du es auf ein neues Gerät mitnehmen.</p>
+    <p class="muted small" style="margin-top:0">Dein Training bleibt auf diesem Handy. Im Kurs geteilt werden nur der Name deines Hundes, der Stand pro Übung und die Punkte für die Rangliste. Mit einer Sicherung nimmst du alles auf ein neues Gerät mit.</p>
     <div class="row" style="flex-wrap:wrap">
       <button class="btn ghost inline" data-act="export">Sicherung speichern</button>
       <button class="btn ghost inline" data-act="import">Sicherung laden</button>
     </div>
     <input type="file" id="importFile" accept="application/json,.json" hidden>
     <div style="margin-top:28px"><button class="btn danger" data-act="reset">Alles zurücksetzen</button></div>
+    <h2>Verwaltung</h2>
+    <button class="btn ghost" data-act="admin">Verwaltung für Trainerinnen</button>
     <p class="center muted small" style="margin-top:24px">Impulskontrolle · by René Homberger</p>`;
 }
 
 function render() {
-  document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
-  const v = { home: viewHome, stats: viewStats, list: viewList, settings: viewSettings }[tab];
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab || (tab === 'admin' && b.dataset.tab === 'settings')));
+  const v = { home: viewHome, stats: viewStats, course: viewCourse, list: viewList, settings: viewSettings, admin: viewAdmin }[tab];
   $('#view').innerHTML = v();
 }
 
@@ -653,6 +707,8 @@ document.addEventListener('click', ev => {
   if (tb) { tab = tb.dataset.tab; if (tab === 'stats') statOff = 0; render(); window.scrollTo(0, 0); return; }
   const rb = t.closest('[data-rate]');
   if (rb) { rate(Number(rb.dataset.rate)); return; }
+  const rk = t.closest('[data-rank]');
+  if (rk) { rankKind = rk.dataset.rank; render(); return; }
   const sb = t.closest('[data-stat]');
   if (sb) { statKind = sb.dataset.stat; statOff = 0; render(); return; }
   const rx = t.closest('[data-reset-ex]');
@@ -665,12 +721,14 @@ document.addEventListener('click', ev => {
   }
   const ab = t.closest('[data-act]');
   if (!ab) return;
+  if (ab.disabled) return;
+  if (['ex-import','join','leave','refresh','admin','admin-back','redeem','drop-role','tcode-new','tcode-save','tcode-toggle','ex-new','ex-edit','ex-save','ex-del','ex-move','img-pick','img-remove','course-new','course-members','member-remove','ranking-reset'].includes(ab.dataset.act)) { handleCloudAct(ab.dataset.act, ab, ev); return; }
   switch (ab.dataset.act) {
     case 'start': startTraining(); break;
     case 'skip': skipAnimated(); break;
     case 'end': endTraining(); break;
     case 'close': closeModal(); break;
-    case 'close-bg': if (t === ab && !$('#onbGo')) closeModal(); break;
+    case 'close-bg': if (t === ab && !$('#onbGo') && !$('.exform')) closeModal(); break;
     case 'onbgo': finishOnboarding(); break;
     case 'prev': statOff--; render(); break;
     case 'next': if (statOff < 0) { statOff++; render(); } break;
@@ -678,7 +736,7 @@ document.addEventListener('click', ev => {
     case 'import': $('#importFile').click(); break;
     case 'reset':
       if (confirm('Wirklich alles löschen? Level, Statistik und Bewertungen gehen verloren.')) {
-        const keepDog = S.dog; S = defaults(); S.dog = keepDog; save(); render(); toast('Zurückgesetzt');
+        const keepDog = S.dog, keepCloud = S.cloud; S = defaults(); S.dog = keepDog; S.cloud = keepCloud; save(); syncMember(); render(); toast('Zurückgesetzt');
       }
       break;
   }
@@ -699,8 +757,14 @@ document.addEventListener('change', ev => {
 });
 document.addEventListener('keydown', ev => {
   if (ev.key === 'Enter' && ev.target.id === 'onbDog') finishOnboarding();
+  if (ev.key === 'Enter' && ev.target.id === 'joinCode') $('[data-act="join"]').click();
+  if (ev.key === 'Enter' && ev.target.id === 'admCode') $('[data-act="redeem"]').click();
 });
-document.addEventListener('visibilitychange', () => { if (!document.hidden && !T) render(); });
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) return;
+  if (!T) render();
+  syncExercises().then(() => { if (S.cloud.courseId) syncMember(); });
+});
 
 // ---------- Erster Start ----------
 function showOnboarding() {
@@ -709,18 +773,455 @@ function showOnboarding() {
     <h3 class="center">Willkommen</h3>
     <div class="field" style="margin-top:16px"><label for="onbDog">Wie heisst dein Hund?</label>
       <input class="input" id="onbDog" placeholder="Name" autocomplete="off" value="${esc(S.dog)}"></div>
+    ${Cloud.configured ? `<div class="field"><label for="onbCode">Kurscode <span class="muted">(falls du einen hast)</span></label>
+      <input class="input code-in" id="onbCode" placeholder="z. B. K7Q2MX" autocomplete="off" autocapitalize="characters" maxlength="6" value="${esc(new URLSearchParams(location.search).get('kurs') || '')}"></div>` : ''}
     <button class="btn" id="onbGo" data-act="onbgo">Los geht's</button></div>`);
 }
-function finishOnboarding() {
-  S.dog = ($('#onbDog').value || '').trim();
+async function finishOnboarding() {
+  const btn = $('#onbGo');
+  const dog = ($('#onbDog').value || '').trim();
+  if (!dog) { toast('Bitte den Namen deines Hundes eingeben.'); return; }
+  S.dog = dog;
+  const code = $('#onbCode') ? $('#onbCode').value.trim() : '';
+  if (code) { const ok = await busy(btn, async () => { await joinCourse(code); return true; }); if (!ok) return; }
   S.settings.onboarded = true;
   save(); closeModal(); render();
 }
 
 // ---------- Start ----------
+// =====================================================================
+// ---------- Übungen aus der Cloud (mit Zwischenspeicher) ----------
+// =====================================================================
+const EXKEY = 'impulskontrolle.ex';
+const IMG = {};
+const IDB = (() => {
+  let p;
+  const open = () => p || (p = new Promise((res, rej) => {
+    const r = indexedDB.open('impulskontrolle', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('img');
+    r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
+  }));
+  const run = (mode, fn) => open().then(db => new Promise((res, rej) => {
+    const t = db.transaction('img', mode), rq = fn(t.objectStore('img'));
+    t.oncomplete = () => res(rq && rq.result); t.onerror = () => rej(t.error);
+  }));
+  return { get: k => run('readonly', s => s.get(k)), put: (k, v) => run('readwrite', s => s.put(v, k)), del: k => run('readwrite', s => s.delete(k)) };
+})();
+const lines = s => String(s || '').split('\n').map(x => x.trim()).filter(Boolean);
+const paras = s => String(s || '').split(/\n\s*\n/).map(x => x.replace(/\s*\n\s*/g, ' ').trim()).filter(Boolean);
+function toApp(x) {
+  return { id: x.id, titel: x.title || 'Ohne Titel', haeufigkeit: x.freq || '', intro: paras(x.intro), schritte: lines(x.steps),
+    nummeriert: !!x.numbered, zusatzTitel: x.extraTitle || '', zusatz: lines(x.extra), schluss: x.note || '',
+    bild: x.imgV ? (IMG[x.id] || '') : (x.imgUrl || ''), hidden: !!x.hidden, order: x.order || 0, raw: x };
+}
+let exCache = { v: 0, list: [], imgV: {} };
+try { exCache = Object.assign(exCache, JSON.parse(localStorage.getItem(EXKEY)) || {}); } catch (e) {}
+function applyExercises() {
+  EX_ALL = exCache.list.map(toApp).sort((a, b) => a.order - b.order || a.titel.localeCompare(b.titel));
+  EX = EX_ALL.filter(e => !e.hidden);
+}
+async function loadImagesFromIDB() {
+  await Promise.all(exCache.list.filter(x => x.imgV).map(async x => {
+    try { const r = await IDB.get(x.id); if (r && r.v === x.imgV) IMG[x.id] = r.data; } catch (e) {}
+  }));
+  applyExercises();
+}
+let exSyncing = null, exLoaded = false;
+function syncExercises(force) {
+  if (!Cloud.configured) { exLoaded = true; return Promise.resolve(); }
+  if (exSyncing) return exSyncing;
+  exSyncing = (async () => {
+    try {
+      const v = await Cloud.exercisesVersion();
+      if (!force && v === exCache.v) return;
+      const list = await Cloud.exercises();
+      const imgV = {};
+      for (const x of list) {
+        if (!x.imgV) continue;
+        if (exCache.imgV[x.id] === x.imgV && IMG[x.id]) { imgV[x.id] = x.imgV; continue; }
+        const d = await Cloud.image(x.id);
+        if (d) { IMG[x.id] = d; imgV[x.id] = x.imgV; try { await IDB.put(x.id, { v: x.imgV, data: d }); } catch (e) {} }
+      }
+      Object.keys(exCache.imgV).forEach(id => { if (!imgV[id]) { delete IMG[id]; IDB.del(id).catch(() => {}); } });
+      exCache = { v, list, imgV };
+      list.filter(x => x.imgUrl && !x.imgV).forEach(x => fetch(x.imgUrl, { mode: 'no-cors' }).catch(() => {}));
+      try { localStorage.setItem(EXKEY, JSON.stringify(exCache)); } catch (e) {}
+      applyExercises();
+    } catch (e) { console.warn('Übungen laden', e); }
+    finally { exSyncing = null; exLoaded = true; if (!T) render(); }
+  })();
+  return exSyncing;
+}
+
+// =====================================================================
+// ---------- Kurs: Mitgliedschaft, Ranglisten, Übersicht ----------
+// =====================================================================
+const weekKey = ts => { const d = new Date(ts); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return dayKey(d.getTime()); };
+const weekUpsNow = () => { const wk = weekKey(Date.now()); return (S.ups || []).filter(u => weekKey(u.t) === wk).length; };
+let course = null, members = null, membersAt = 0, rankKind = 'week';
+
+async function syncMember() {
+  if (!Cloud.configured || !S.cloud.courseId) return;
+  try {
+    const c = await Cloud.course(S.cloud.courseId);
+    const uid = await Cloud.uid();
+    if (!c) return leaveLocal('Der Kurs existiert nicht mehr.');
+    if ((c.removed || []).includes(uid)) return leaveLocal('Du bist nicht mehr in diesem Kurs.');
+    course = c; S.cloud.courseName = c.name; S.cloud.uid = uid;
+    if ((c.season || 1) !== S.cloud.season) { S.cloud.season = c.season || 1; S.cloud.seasonBase = S.xp; }
+    const status = {};
+    EX_ALL.forEach(e => { const k = status_k(e.id); if (k) status[e.id] = k; });
+    await Cloud.pushMember(c.id, {
+      dog: (dogName() || 'Hund').slice(0, 30), status,
+      seasonXp: Math.max(0, Math.round(S.xp - S.cloud.seasonBase)), season: S.cloud.season,
+      week: weekKey(Date.now()), weekUps: weekUpsNow()
+    });
+    save(); members = null;
+  } catch (e) { console.warn('Kurs abgleichen', e); }
+}
+const status_k = id => status(id).k;
+async function loadMembers(force) {
+  if (!Cloud.configured || !S.cloud.courseId) return;
+  if (!force && members && Date.now() - membersAt < 120000) return;
+  try { members = await Cloud.members(S.cloud.courseId); membersAt = Date.now(); }
+  catch (e) { console.warn('Teilnehmer laden', e); if (!members) members = []; }
+  if (!T && (tab === 'course' || tab === 'list')) render();
+}
+async function joinCourse(code) {
+  code = String(code || '').trim().toUpperCase();
+  if (!code) throw new Error('Bitte den Kurscode eingeben.');
+  const c = await Cloud.findCourse(code);
+  if (!c) throw new Error('Kein Kurs mit diesem Code gefunden.');
+  const uid = await Cloud.uid();
+  if ((c.removed || []).includes(uid)) throw new Error('Du kannst diesem Kurs nicht mehr beitreten.');
+  S.cloud = { courseId: c.id, courseName: c.name, code: c.code, season: c.season || 1, seasonBase: S.xp, uid };
+  course = c; save();
+  await syncMember(); await loadMembers(true);
+  toast(`Willkommen im Kurs «${c.name}»`);
+}
+function leaveLocal(msg) {
+  S.cloud = defaults().cloud; course = null; members = null; save();
+  if (msg) toast(msg);
+  if (!T) render();
+}
+const medal = pos => ['🥇', '🥈', '🥉'][pos - 1] || `${pos}.`;
+const shortTitle = t => String(t).replace(/^(Das|Der|Die)\s+/i, '').replace(/[«»"„“]/g, '').replace(/[\u{1F300}-\u{1FAFF}☀-➿]/gu, '').trim();
+
+function whoCanHTML(id) {
+  if (!S.cloud.courseId) return '';
+  if (!members) { loadMembers(); return `<h4 class="kurs-h">Im Kurs</h4><p class="muted small">Wird geladen …</p>`; }
+  const groups = [[4, 'Sitzt bei'], [3, 'Gut dabei bei'], [2, 'Im Aufbau bei'], [1, 'Braucht noch Training bei']];
+  const rows = groups.map(([k, lbl]) => {
+    const n = members.filter(m => m.status && m.status[id] === k).map(m => esc(m.dog));
+    return n.length ? `<div class="who"><span class="chip st-${['neu', 'ueben', 'aufbau', 'gut', 'super'][k]}">${lbl}</span> ${n.join(', ')}</div>` : '';
+  }).join('');
+  return `<h4 class="kurs-h">Im Kurs «${esc(S.cloud.courseName)}»</h4>${rows || '<p class="muted small">Noch niemand im Kurs hat diese Übung bewertet.</p>'}`;
+}
+
+function viewCourse() {
+  if (!Cloud.configured) return `<div class="empty">Die Kursfunktionen sind noch nicht eingerichtet.</div>`;
+  if (!S.cloud.courseId) {
+    const pre = new URLSearchParams(location.search).get('kurs') || '';
+    return `<div class="card">
+      <h3 style="margin:0 0 6px">Einem Kurs beitreten</h3>
+      <p class="muted small" style="margin:0 0 12px">Den Code bekommst du von deiner Trainerin – oder scanne ihren QR-Code.</p>
+      <div class="row"><input class="input code-in" id="joinCode" placeholder="z. B. K7Q2MX" value="${esc(pre)}" autocomplete="off" autocapitalize="characters" maxlength="6">
+      <button class="btn inline" data-act="join">Beitreten</button></div>
+      <p class="muted small" style="margin:12px 0 0">Im Kurs sehen die anderen nur den Namen deines Hundes, den Stand pro Übung und deine Punkte für die Rangliste.</p></div>`;
+  }
+  if (!members) { loadMembers(); return `<div class="empty">Kurs wird geladen …</div>`; }
+  const me = S.cloud.uid, wk = weekKey(Date.now());
+  const ms = [...members];
+  const val = m => rankKind === 'week' ? (m.week === wk ? m.weekUps || 0 : 0) : (m.season === (course ? course.season : S.cloud.season) ? m.seasonXp || 0 : 0);
+  ms.sort((a, b) => val(b) - val(a) || String(a.dog).localeCompare(String(b.dog)));
+  const rank = ms.map(m => `<div class="rank ${m.id === me ? 'me' : ''}"><span class="pos">${val(m) ? medal(1 + ms.filter(o => val(o) > val(m)).length) : '·'}</span>
+      <span class="nm">${esc(m.dog)}${m.id === me ? ' <small>(du)</small>' : ''}</span>
+      <span class="val">${rankKind === 'week' ? `${val(m)} <small>${val(m) === 1 ? 'Aufstieg' : 'Aufstiege'}</small>` : `${val(m)} <small>XP</small>`}</span></div>`).join('');
+  const grid = EX.length && ms.length ? `<div class="mx-wrap"><table class="mx"><thead><tr><th class="sticky"></th>${EX.map(e => `<th title="${esc(e.titel)}"><span>${esc(shortTitle(e.titel))}</span></th>`).join('')}</tr></thead>
+      <tbody>${[...members].sort((a, b) => String(a.dog).localeCompare(String(b.dog))).map(m => `<tr class="${m.id === me ? 'me' : ''}"><th class="sticky">${esc(m.dog)}</th>${EX.map(e => `<td><i class="d k${(m.status && m.status[e.id]) || 0}"></i></td>`).join('')}</tr>`).join('')}</tbody></table></div>
+      <div class="legend" style="margin-top:10px"><span><i class="d k4"></i>Sitzt</span><span><i class="d k3"></i>Gut dabei</span><span><i class="d k2"></i>Im Aufbau</span><span><i class="d k1"></i>Braucht Training</span><span><i class="d k0"></i>Neu</span></div>` : '<p class="muted small">Noch keine Daten.</p>';
+  return `
+    <div class="card soft"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+      <div><div class="muted small">Kurs</div><b style="font-size:18px">${esc(S.cloud.courseName)}</b></div>
+      <div class="muted small" style="text-align:right">${members.length} ${members.length === 1 ? 'Hund' : 'Hunde'}<br><button class="link small" data-act="refresh" style="padding:4px 0">Aktualisieren</button></div></div></div>
+    <h2>Rangliste</h2>
+    <div class="seg"><button class="${rankKind === 'week' ? 'on' : ''}" data-rank="week">Fortschritt diese Woche</button><button class="${rankKind === 'all' ? 'on' : ''}" data-rank="all">Gesamt</button></div>
+    <p class="muted small" style="margin:-4px 0 10px">${rankKind === 'week' ? 'Zählt, wie oft eine Übung diese Woche eine Stufe aufgestiegen ist (z. B. von «Im Aufbau» zu «Gut dabei»).' : 'Alle XP seit Kursbeitritt bzw. seit dem letzten Neustart der Rangliste.'}</p>
+    <div class="card" style="padding:6px 14px">${rank || '<p class="muted small">Noch niemand dabei.</p>'}</div>
+    <h2>Wer kann was?</h2>
+    <p class="muted small" style="margin:-4px 0 10px">Tippe in der Übungsliste auf eine Übung, um zu sehen, wer sie schon kann – vielleicht findet ihr euch zum gemeinsamen Üben.</p>
+    <div class="card" style="padding:12px">${grid}</div>
+    <button class="link small" data-act="leave" style="color:var(--muted);margin-top:6px">Kurs verlassen</button>`;
+}
+
+// =====================================================================
+// ---------- Verwaltung (Master / Trainerin) – Freischaltung per Code ----------
+// =====================================================================
+let staffInfo, adm = { courses: null, codes: null, openCourse: null, courseMembers: {} };
+const ERR = { 'permission-denied': 'Dafür fehlt die Berechtigung.', 'unavailable': 'Keine Verbindung zum Server.' };
+const errMsg = e => ERR[e && e.code] || (e && e.message && !e.code ? e.message : 'Das hat nicht geklappt. Bitte nochmals versuchen.');
+async function busy(btn, fn) {
+  if (btn) { btn.disabled = true; btn.dataset.txt = btn.textContent; btn.textContent = '…'; }
+  try { return await fn(); }
+  catch (e) { console.warn(e); toast(errMsg(e)); }
+  finally { if (btn && btn.isConnected) { btn.disabled = false; btn.textContent = btn.dataset.txt; } }
+}
+const isStaff = () => !!staffInfo && (staffInfo.role === 'master' || staffInfo.role === 'trainer');
+const isMasterNow = () => !!staffInfo && staffInfo.role === 'master';
+async function openAdmin() {
+  tab = 'admin'; staffInfo = undefined; render(); window.scrollTo(0, 0);
+  try { staffInfo = Cloud.configured ? await Cloud.myRole() : null; } catch (e) { staffInfo = { role: null, offline: true }; }
+  if (isStaff()) { await syncExercises(true); await loadAdminData(); }
+  render();
+}
+async function loadAdminData() {
+  try {
+    if (isMasterNow()) {
+      const [c, t] = await Promise.all([Cloud.courses(), Cloud.trainerCodes()]);
+      adm.courses = c.sort((x, y) => (x.created || 0) - (y.created || 0));
+      adm.codes = t.sort((x, y) => (x.created || 0) - (y.created || 0));
+    } else if (isStaff()) {
+      adm.courses = await Cloud.courses(staffInfo.courses || []);
+    }
+  } catch (e) { toast(errMsg(e)); }
+}
+const joinLink = code => location.origin + location.pathname.replace(/index\.html$/, '') + '?kurs=' + encodeURIComponent(code);
+const mb = n => (n / 1048576).toFixed(1).replace('.', ',');
+
+function viewAdmin() {
+  const back = `<button class="link" data-act="admin-back" style="padding-left:0">‹ Einstellungen</button>`;
+  if (!Cloud.configured) return back + `<div class="card soft"><b>Firebase ist noch nicht eingerichtet.</b><p class="muted small" style="margin:6px 0 0">In der Datei firebase-config.js fehlen noch die Zugangsdaten.</p></div>`;
+  if (staffInfo === undefined) return back + `<div class="empty">Wird geladen …</div>`;
+  if (!isStaff()) return back + `
+    <h2 style="margin-top:6px">Verwaltung</h2>
+    <p class="muted small" style="margin-top:0">Für Trainerinnen und den Administrator. Teilnehmer brauchen hier nichts – sie treten unter «Kurs» bei.</p>
+    ${staffInfo && staffInfo.inactive ? '<div class="banner">Dein Trainer-Code wurde deaktiviert. Bitte beim Administrator einen neuen Code holen.</div>' : ''}
+    ${staffInfo && staffInfo.invalid ? '<div class="banner">Der Master-Code wurde geändert. Bitte den neuen Code eingeben.</div>' : ''}
+    ${staffInfo && staffInfo.offline ? '<div class="banner">Keine Verbindung. Die Verwaltung braucht Internet.</div>' : ''}
+    <div class="field"><label for="admCode">Freischaltcode</label><input class="input" id="admCode" autocomplete="off" autocapitalize="characters" spellcheck="false"></div>
+    <button class="btn" data-act="redeem">Freischalten</button>`;
+
+  const master = isMasterNow();
+  const who = `<div class="card soft" style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+      <div style="min-width:0"><div class="muted small">Dieses Handy ist freigeschaltet als</div><b>${master ? 'Master' : 'Trainerin' + (staffInfo.name ? ' · ' + esc(staffInfo.name) : '')}</b></div>
+      <button class="btn ghost inline" data-act="drop-role">Abmelden</button></div>`;
+  const used = exCache.list.reduce((s, x) => s + (x.imgSize || 0) + JSON.stringify(x).length, 0);
+  const exRows = EX_ALL.map((e, i) => `<div class="adm-row ${e.hidden ? 'off' : ''}">
+      ${e.bild ? `<img src="${e.bild}" alt="">` : `<span class="noimg">🐾</span>`}
+      <div class="t">${esc(e.titel)}${e.hidden ? '<small>ausgeblendet</small>' : ''}</div>
+      <div class="acts"><button data-act="ex-move" data-id="${e.id}" data-dir="-1" ${i === 0 ? 'disabled' : ''} aria-label="nach oben">↑</button>
+      <button data-act="ex-move" data-id="${e.id}" data-dir="1" ${i === EX_ALL.length - 1 ? 'disabled' : ''} aria-label="nach unten">↓</button>
+      <button data-act="ex-edit" data-id="${e.id}">Bearbeiten</button></div></div>`).join('');
+  const cs = adm.courses || [];
+  const courseName = id => (cs.find(c => c.id === id) || {}).name || '?';
+  const courses = `<h2>${master ? 'Kurse' : 'Meine Kurse'}</h2>
+      ${cs.map(c => `<div class="card">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+          <div><b style="font-size:17px">${esc(c.name)}</b><div class="muted small">Kurscode für Teilnehmer</div><div class="code">${esc(c.code)}</div></div>
+          <div class="qr">${Cloud.qrSvg(joinLink(c.code), 3)}</div></div>
+        <p class="small muted" style="word-break:break-all;margin:8px 0">${esc(joinLink(c.code))}</p>
+        <div class="row" style="flex-wrap:wrap"><button class="btn ghost inline" data-act="course-members" data-id="${c.id}">${adm.openCourse === c.id ? 'Teilnehmer ausblenden' : 'Teilnehmer'}</button>
+        <button class="btn ghost inline" data-act="ranking-reset" data-id="${c.id}" data-season="${c.season || 1}">Rangliste neu starten</button></div>
+        ${adm.openCourse === c.id ? `<div style="margin-top:10px">${(adm.courseMembers[c.id] || []).map(m => `<div class="focus-item"><span>${esc(m.dog)} <small class="muted">${m.seasonXp || 0} XP</small></span><button class="link small" data-act="member-remove" data-course="${c.id}" data-id="${m.id}" style="color:var(--red)">Entfernen</button></div>`).join('') || '<p class="muted small">Noch keine Teilnehmer.</p>'}</div>` : ''}
+      </div>`).join('') || `<p class="muted small">${master ? 'Noch kein Kurs.' : 'Diesem Trainer-Code ist noch kein Kurs zugeordnet.'}</p>`}
+      ${master ? '<button class="btn ghost" data-act="course-new">+ Neuer Kurs</button>' : ''}`;
+  const codes = master ? `<h2>Trainer-Codes</h2>
+      <p class="muted small" style="margin-top:0">Gib der Trainerin ihren Code. Sie tippt ihn hier unter «Verwaltung» ein. Deaktivierst du einen Code, verliert sie sofort die Rechte.</p>
+      <div class="card" style="padding:6px 14px">${(adm.codes || []).map(t => `<div class="focus-item"><span style="min-width:0">
+          <b>${esc(t.name)}</b> <span class="chip ${t.active ? 'st-gut' : 'st-ueben'}" style="margin:0 0 0 4px">${t.active ? 'aktiv' : 'deaktiviert'}</span><br>
+          <span class="code" style="font-size:17px">${esc(t.id)}</span><br><small class="muted">${(t.courses || []).map(courseName).map(esc).join(', ') || 'kein Kurs'}</small></span>
+          <button class="btn ${t.active ? 'ghost' : ''} inline" data-act="tcode-toggle" data-id="${esc(t.id)}" data-active="${t.active ? 1 : 0}">${t.active ? 'Deaktivieren' : 'Aktivieren'}</button></div>`).join('') || '<p class="muted small">Noch keine Trainer-Codes.</p>'}</div>
+      <button class="btn ghost" data-act="tcode-new">+ Neuer Trainer-Code</button>` : '';
+  return back + who + `
+    <h2>Übungen <small class="muted" style="font-weight:500">${EX_ALL.length}</small></h2>
+    <button class="btn" data-act="ex-new">+ Neue Übung</button>
+    <div style="margin-top:12px">${exRows || '<p class="muted small">Noch keine Übungen.</p>'}</div>
+    ${master ? `<button class="btn ghost" data-act="ex-import" style="margin-top:12px">Startübungen importieren</button>
+      <p class="muted small" style="margin:6px 0 0">Übernimmt die 23 Startübungen. Die Fotos werden direkt aus dem Repository «Impulskontrolle» angezeigt und belasten Firebase nicht. Übungen mit gleichem Titel werden übersprungen.</p>` : ''}
+    <div class="card soft" style="margin-top:14px"><div class="goal"><span>Speicher</span><span>${mb(used)} MB von 1 GB</span></div>
+      <div class="bar green"><i style="width:${Math.max(1, used / 1073741824 * 100)}%"></i></div>
+      <div class="muted small" style="margin-top:6px">Gratis-Kontingent von Firebase. Fotos werden beim Hochladen automatisch verkleinert.</div></div>
+    ${courses}${codes}`;
+}
+function showTrainerCodeForm() {
+  const cs = adm.courses || [];
+  showModal(`<div class="exform"><h3>Neuer Trainer-Code</h3>
+    <div class="field"><label for="tName">Für wen?</label><input class="input" id="tName" placeholder="z. B. Sandra" maxlength="40"></div>
+    <div class="field"><label>Kurse, die sie betreut</label>
+      ${cs.map((c, i) => `<label class="check"><input type="checkbox" class="tCourse" value="${c.id}" ${cs.length === 1 ? 'checked' : ''}> ${esc(c.name)}</label>`).join('') || '<p class="muted small">Lege zuerst einen Kurs an.</p>'}</div>
+    <button class="btn" data-act="tcode-save">Code erstellen</button>
+    <button class="link" data-act="close" style="margin-top:8px">Abbrechen</button></div>`);
+}
+
+// ---------- Übungs-Formular ----------
+let formImg;  // undefined = unverändert, null = entfernen, string = neu
+let formId = null;
+function showExForm(id) {
+  formId = id || null; formImg = undefined;
+  const e = id ? EX_ALL.find(x => x.id === id) : null, x = e ? e.raw : {};
+  const img = e && e.bild;
+  showModal(`<div class="exform">
+    <h3>${e ? 'Übung bearbeiten' : 'Neue Übung'}</h3>
+    <div class="field"><label for="fTitle">Titel *</label><input class="input" id="fTitle" value="${esc(x.title)}" maxlength="80"></div>
+    <div class="field"><label>Foto</label>
+      <div id="fImgBox" class="fimg">${img ? `<img src="${img}" alt="">` : '<span>Kein Foto</span>'}</div>
+      <div class="row" style="margin-top:8px"><button class="btn ghost inline" data-act="img-pick">Foto wählen</button>
+      <button class="btn ghost inline" data-act="img-remove" ${img ? '' : 'style="display:none"'} id="fImgDel">Entfernen</button></div>
+      <input type="file" id="fImgFile" accept="image/*" hidden></div>
+    <div class="field"><label for="fFreq">Häufigkeit <span class="muted">(optional)</span></label><input class="input" id="fFreq" value="${esc(x.freq)}" placeholder="z. B. Täglich 3 Minuten" maxlength="40"></div>
+    <div class="field"><label for="fIntro">Einleitung / Ziel <span class="muted">(optional)</span></label><textarea class="input" id="fIntro" rows="3" placeholder="z. B. Ziel: Dein Hund lernt …">${esc(x.intro)}</textarea><div class="hint">Leerzeile = neuer Absatz</div></div>
+    <div class="field"><label for="fSteps">Schritte</label><textarea class="input" id="fSteps" rows="6" placeholder="Ein Schritt pro Zeile">${esc(x.steps)}</textarea>
+      <label class="check"><input type="checkbox" id="fNum" ${x.numbered ? 'checked' : ''}> Schritte nummerieren</label></div>
+    <details class="more" ${x.extra ? 'open' : ''}><summary>Zusätzliche Liste <span class="muted">(optional)</span></summary>
+      <div class="field" style="margin-top:10px"><label for="fExTitle">Titel der Liste</label><input class="input" id="fExTitle" value="${esc(x.extraTitle)}" placeholder="z. B. Steigere langsam die Schwierigkeit:"></div>
+      <div class="field"><label for="fExtra">Punkte</label><textarea class="input" id="fExtra" rows="4" placeholder="Ein Punkt pro Zeile">${esc(x.extra)}</textarea></div></details>
+    <div class="field"><label for="fNote">Hinweis am Schluss <span class="muted">(optional)</span></label><textarea class="input" id="fNote" rows="2">${esc(x.note)}</textarea></div>
+    <label class="check" style="margin-bottom:16px"><input type="checkbox" id="fHidden" ${x.hidden ? 'checked' : ''}> Ausgeblendet (Teilnehmer sehen die Übung nicht)</label>
+    <button class="btn" data-act="ex-save">Speichern</button>
+    <div class="row" style="justify-content:space-between;margin-top:8px"><button class="link" data-act="close">Abbrechen</button>
+    ${e ? `<button class="link" data-act="ex-del" style="color:var(--red)">Übung löschen</button>` : ''}</div></div>`);
+}
+function resizeImage(file) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => {
+      const max = 1000, s = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      let q = 0.78, d = c.toDataURL('image/jpeg', q);
+      while (d.length > 300000 && q > 0.4) { q -= 0.08; d = c.toDataURL('image/jpeg', q); }
+      URL.revokeObjectURL(img.src); res(d);
+    };
+    img.onerror = () => rej(new Error('Das Bild konnte nicht gelesen werden.'));
+    img.src = URL.createObjectURL(file);
+  });
+}
+async function saveExForm(btn) {
+  const v = id => ($('#' + id).value || '').trim();
+  const title = v('fTitle');
+  if (!title) { toast('Bitte einen Titel eingeben.'); return; }
+  const data = { title, freq: v('fFreq'), intro: v('fIntro'), steps: v('fSteps'), numbered: $('#fNum').checked,
+    extraTitle: v('fExTitle'), extra: v('fExtra'), note: v('fNote'), hidden: $('#fHidden').checked };
+  if (!formId) data.order = EX_ALL.reduce((m, e) => Math.max(m, e.order), 0) + 1;
+  if (formImg !== undefined) data.imgUrl = '';   // neues Foto hochgeladen oder Foto entfernt
+  await busy(btn, async () => {
+    await Cloud.saveExercise(formId, data, formImg);
+    closeModal(); await syncExercises(true); toast('Gespeichert'); render();
+  });
+}
+
+// ---------- Startübungen importieren (einmalig) ----------
+// Nur die Texte gehen in die Datenbank; die Fotos bleiben im bisherigen GitHub-Repository «Impulskontrolle».
+const START_IMG_BASE = 'https://hombi1988.github.io/Impulskontrolle/';
+const START_EXERCISES = [{"title": "Das Ampel-Spiel 🚦", "freq": "", "intro": "Dein Hund lernt, dass Ziehen nicht schneller ans Ziel führt.", "steps": "Grüne Ampel: Leine locker, ihr geht weiter.\nRote Ampel: Sobald die Leine straff wird, bleibst du stehen.\nWieder grün: Sobald die Leine locker wird, geht es weiter.", "numbered": false, "extraTitle": "", "extra": "", "note": "Später kannst du das auch vor interessanten Stellen üben.", "hidden": false, "img": "ampel.jpg"}, {"title": "Der Leckerli-Jackpot", "freq": "", "intro": "", "steps": "Verstecke 5–10 kleine Leckerlis im Gras.\nGib ein Signal wie «Such!».\nLass ihn suchen.\nBeende das Spiel mit «Fertig».", "numbered": false, "extraTitle": "", "extra": "", "note": "Das trainiert auch das Umschalten zwischen Aktivität und Ruhe.", "hidden": false, "img": "leckerli-jackpot.jpg"}, {"title": "Das Warten an Türen", "freq": "", "intro": "", "steps": "Öffne die Tür einen Spalt.\nWill er hinausstürmen, schliesst du sie ruhig wieder.\nBleibt er kurz ruhig, öffnest du weiter.\nMit Freigabesignal darf er hinaus.", "numbered": false, "extraTitle": "", "extra": "", "note": "Nicht als Gehorsamstest, sondern als kleine Selbstkontrollübung.", "hidden": false, "img": "tueren.jpg"}, {"title": "Der Name-ist-wichtig-Test", "freq": "", "intro": "", "steps": "Sage seinen Namen genau einmal.\nSchaut er dich an, belohne ihn.\nÜbe an immer interessanteren Orten.\nSpäter auch mit sichtbaren Ablenkungen.", "numbered": false, "extraTitle": "", "extra": "", "note": "Bei Hundesichtungen zunächst nur auf einer Distanz üben, auf der er noch reagieren kann.", "hidden": false, "img": "name-test.jpg"}, {"title": "Das Versteckspiel", "freq": "", "intro": "", "steps": "Verstecke dich hinter einem Baum oder einer Ecke, während er sicher bei dir ist.\nRufe ihn.\nWenn er dich findet, gibt es eine tolle Belohnung.\nMach es spielerisch und einfach.", "numbered": false, "extraTitle": "", "extra": "", "note": "Das fördert die Orientierung an dir.", "hidden": false, "img": "versteckspiel.jpg"}, {"title": "Das Futterbeutel-Spiel", "freq": "", "intro": "", "steps": "Zeige ihm einen Futterbeutel.\nLass ihn kurz warten.\nVerstecke ihn in der Nähe.\nGib das Signal «Such!».\nEr darf ihn finden und bekommt daraus seine Belohnung.", "numbered": false, "extraTitle": "", "extra": "", "note": "", "hidden": false, "img": "futterbeutel.jpg"}, {"title": "Das Rückwärtslaufen", "freq": "", "intro": "", "steps": "Laufe langsam rückwärts.\nLock ihn mit einer freundlichen Stimme zu dir.\nBelohne ihn, wenn er dir folgt.\nBaue kurze Richtungswechsel ein.", "numbered": false, "extraTitle": "", "extra": "", "note": "Das ist auch eine gute Ergänzung zu eurem bereits funktionierenden Weglauf-Spiel.", "hidden": false, "img": "rueckwaerts.jpg"}, {"title": "Der Impulskontroll-Parcours", "freq": "", "intro": "Baue einen kleinen Parcours:", "steps": "Um ein Hütchen laufen.\nÜber eine niedrige Stange steigen.\nKurz sitzen.\nAuf einer Matte warten.\nWeitergehen.", "numbered": false, "extraTitle": "", "extra": "", "note": "Nicht Geschwindigkeit, sondern kontrolliertes Arbeiten belohnen.", "hidden": false, "img": "parcours.jpg"}, {"title": "Das Spielzeug-aus-Spiel", "freq": "", "intro": "Besonders gut für Hunde, die gerne spielen.", "steps": "Spiele kurz mit ihm.\nSage «Aus».\nHalte das Spielzeug ruhig.\nSobald er loslässt, markiere und belohne.\nDanach darf das Spiel wieder beginnen.", "numbered": false, "extraTitle": "", "extra": "", "note": "Er lernt, dass Aufhören nicht bedeutet, dass der Spass vorbei ist.", "hidden": false, "img": "spielzeug-aus.jpg"}, {"title": "Das Beobachten im Sitzen", "freq": "", "intro": "Setze dich mit ihm an einen ruhigen Ort.", "steps": "Er darf Menschen, Fahrräder und andere Reize beobachten.\nBelohne ruhiges Verhalten.\nEr muss nicht ständig dich anschauen.\nSobald er von selbst wieder zu dir schaut, gibt es eine Belohnung.", "numbered": false, "extraTitle": "", "extra": "", "note": "", "hidden": false, "img": "beobachten-sitzen.jpg"}, {"title": "Das Drei-Leckerli-Spiel", "freq": "", "intro": "", "steps": "Lege drei Leckerlis in etwas Abstand zueinander.\nLass ihn das erste suchen.\nDanach wartet er kurz auf dein Signal.\nDann darf er das zweite suchen.\nWiederhole das mit dem dritten.", "numbered": false, "extraTitle": "", "extra": "", "note": "Du trainierst damit das Wechseln zwischen Aktivität und Warten.", "hidden": false, "img": "drei-leckerli.jpg"}, {"title": "Das Ruhe-Signal", "freq": "", "intro": "", "steps": "Setze dich mit ihm an einen ruhigen Ort.\nBelohne ihn, wenn er sich entspannt hinlegt.\nSprich ruhig mit ihm.\nBelohne ruhiges Beobachten und Liegen.\nBeende die Übung, bevor er unruhig wird.", "numbered": false, "extraTitle": "", "extra": "", "note": "", "hidden": false, "img": "ruhe-signal.jpg"}, {"title": "Das Handtarget – «Touch»", "freq": "", "intro": "Ziel: Dein Hund lernt, sich aktiv zu dir zu bewegen.", "steps": "Halte deine offene Hand vor seine Nase.\nSobald er sie mit der Nase berührt: «Yes!»\nBelohnen.\nWiederhole das aus verschiedenen Positionen.\nSpäter kannst du deine Hand auch seitlich oder etwas weiter weg anbieten.", "numbered": true, "extraTitle": "", "extra": "", "note": "Das ist später eine tolle Möglichkeit, seine Aufmerksamkeit umzulenken.", "hidden": false, "img": "handtarget.jpg"}, {"title": "Das Leckerli-am-Boden-Spiel", "freq": "", "intro": "Ziel: Nicht alles sofort nehmen, was interessant ist.", "steps": "Lass ein Leckerli auf den Boden fallen und decke es mit deiner Hand ab.\nWarte, bis dein Hund kurz zurückweicht oder dich anschaut.\nSag «Okay» und gib ihm ein anderes Leckerli aus deiner Hand.\nSteigere die Schwierigkeit langsam.", "numbered": true, "extraTitle": "", "extra": "", "note": "Wichtig: Er soll nicht lernen, dass er sich das Leckerli irgendwann doch selbst holen kann.", "hidden": false, "img": "leckerli-boden.jpg"}, {"title": "Das Richtungswechsel-Spiel", "freq": "", "intro": "Ziel: Dein Hund achtet darauf, wohin du gehst.", "steps": "Laufe geradeaus.\nÄndere plötzlich, aber freundlich die Richtung.\nWenn dein Hund mitkommt, belohne ihn.\nBaue verschiedene Richtungen ein.", "numbered": false, "extraTitle": "", "extra": "", "note": "Später kannst du ein Signal wie «Mit mir!» einführen.", "hidden": false, "img": "richtungswechsel.jpg"}, {"title": "Das Spielzeug-Frust-Spiel", "freq": "", "intro": "Ziel: Begeisterung kontrollieren, obwohl etwas Tolles passiert.", "steps": "Nimm einen Ball.\nBewege ihn ein wenig.\nDein Hund soll kurz warten.\nSobald er ruhig bleibt, gibst du das Freigabesignal.\nEr darf dem Ball hinterherlaufen.", "numbered": true, "extraTitle": "", "extra": "", "note": "Wenn er schon beim ersten Versuch explodiert, mach die Bewegung kleiner.", "hidden": false, "img": "spielzeug-frust.jpg"}, {"title": "Der freiwillige Blickkontakt", "freq": "", "intro": "Ziel: Dein Hund soll dich von selbst anschauen.\n\nGehe an einen interessanten Ort, beispielsweise in die Nähe des Tierparks.", "steps": "Sag nichts.\nWarte auf einen freiwilligen Blick.\nSofort markieren und belohnen.\nWiederhole das.", "numbered": false, "extraTitle": "", "extra": "", "note": "Das ist eine besonders wichtige Grundlage für Hundebegegnungen.", "hidden": false, "img": "blickkontakt.jpg"}, {"title": "Das Deckentraining draussen", "freq": "", "intro": "Ziel: Auch bei interessanter Umgebung zur Ruhe kommen.", "steps": "Nimm eine kleine Decke mit.\nBelohne deinen Hund, wenn er daraufgeht.\nBelohne zunächst das Stehen, später das Sitzen und Liegen.\nÜbe an unterschiedlichen Orten.\nBelohne ruhiges Beobachten.", "numbered": true, "extraTitle": "", "extra": "", "note": "Nicht erzwingen. Er soll lernen, dass er auch draussen entspannen kann.", "hidden": false, "img": "decke-draussen.jpg"}, {"title": "Das «Schau und wieder weg»-Spiel", "freq": "", "intro": "Ziel: Andere Hunde wahrnehmen, ohne sich darin zu verlieren.\n\nDas ist für euch vermutlich eine der wertvollsten Übungen.", "steps": "Dein Hund sieht einen anderen Hund.\nEr darf kurz hinschauen.\nSobald er seinen Blick freiwillig wieder löst, markierst du.\nBelohne ihn.\nWiederhole das.", "numbered": true, "extraTitle": "", "extra": "", "note": "Wichtig: Nicht warten, bis er sich festgestarrt hat. Beginne mit ausreichend Abstand.", "hidden": false, "img": "schau-weg.jpg"}, {"title": "Das «Erst schauen, dann los»-Spiel", "freq": "Täglich 3–5 Minuten", "intro": "Übe zunächst ohne andere Hunde.", "steps": "Nimm ein Leckerli in die geschlossene Hand.\nDein Hund wird versuchen, daran zu kommen.\nWarte, bis er kurz aufhört und dich anschaut.\nSofort loben und Leckerli aus der anderen Hand geben.\nWiederholen.", "numbered": true, "extraTitle": "", "extra": "", "note": "Er lernt: Nicht Drängeln, sondern Selbstkontrolle bringt mich ans Ziel.", "hidden": false, "img": "erst-schauen.jpg"}, {"title": "Das Freigabesignal", "freq": "Täglich 3 Minuten", "intro": "Das ist eine meiner Lieblingsübungen für deinen Fall.", "steps": "Lass ihn sitzen.\nLege ein Spielzeug vor ihn.\nEr soll warten.\nSag beispielsweise «Okay!».\nJetzt darf er das Spielzeug holen.", "numbered": true, "extraTitle": "Steigere langsam die Schwierigkeit:", "extra": "Spielzeug näher an ihn legen.\nSpielzeug bewegen.\nKurz um ihn herumgehen.\nWartezeit verlängern.", "note": "Nicht minutenlang warten lassen. Lieber viele kurze Erfolge.", "hidden": false, "img": "freigabesignal.jpg"}, {"title": "Das Hunde-Beobachtungstraining", "freq": "2–3 Mal pro Woche", "intro": "Das ist die wichtigste Übung für euch.\n\nDu brauchst dafür einen bekannten Hund und dessen Besitzer.", "steps": "Ihr stellt euch mit genügend Abstand auf.\nDein Hund darf den anderen Hund sehen.\nSobald er ruhig bleibt oder sich kurz zu dir umdreht, belohnst du ihn.\nGeht gemeinsam ein paar Schritte näher.\nWird er hektisch, geht ihr wieder auf Distanz.\nBleibt er ansprechbar, kann es als Belohnung eine kurze Spielpause geben.", "numbered": true, "extraTitle": "", "extra": "", "note": "So lernt er, dass er seine Begeisterung kontrollieren kann und trotzdem Hundekontakt bekommt.", "hidden": false, "img": "hunde-beobachtung.jpg"}, {"title": "Das Umorientierungsspiel", "freq": "Bei jedem Spaziergang", "intro": "", "steps": "Laufe ganz normal.\nWenn dein Hund von sich aus zu dir schaut, sag «Yes!».\nBelohne ihn.\nLaufe weiter.", "numbered": false, "extraTitle": "", "extra": "", "note": "Du belohnst damit freiwillige Aufmerksamkeit, ohne ständig seinen Namen rufen zu müssen.", "hidden": false, "img": "umorientierung.jpg"}];
+async function importStart(btn) {
+  const list = START_EXERCISES;
+  const have = new Set(EX_ALL.map(e => e.titel.trim().toLowerCase()));
+  const todo = list.filter(x => !have.has(String(x.title).trim().toLowerCase()));
+  if (!todo.length) { toast('Alle Startübungen sind schon vorhanden.'); return; }
+  if (!confirm(`${todo.length} Startübungen mit Fotos importieren?`)) return;
+  const base = EX_ALL.reduce((m, e) => Math.max(m, e.order), 0);
+  btn.disabled = true;
+  try {
+    for (let i = 0; i < todo.length; i++) {
+      btn.textContent = `Importiere ${i + 1} von ${todo.length} …`;
+      const { img, ...data } = todo[i];
+      data.order = base + i + 1;
+      data.imgUrl = START_IMG_BASE + img;
+      await Cloud.saveExercise(null, data, undefined);
+    }
+    await syncExercises(true); toast(`${todo.length} Übungen importiert`);
+  } catch (e) { toast(errMsg(e)); await syncExercises(true); }
+  render();
+}
+
+// ---------- Klicks der neuen Bereiche ----------
+async function handleCloudAct(act, ab, ev) {
+  const id = ab.dataset.id;
+  switch (act) {
+    case 'join': await busy(ab, () => joinCourse($('#joinCode').value)); render(); return true;
+    case 'leave':
+      if (confirm('Kurs wirklich verlassen? Dein Training bleibt erhalten, du verschwindest aber aus Rangliste und Übersicht.')) {
+        await busy(ab, async () => { await Cloud.leaveCourse(S.cloud.courseId); leaveLocal('Kurs verlassen'); });
+      }
+      return true;
+    case 'refresh': await busy(ab, async () => { await syncMember(); await loadMembers(true); }); render(); return true;
+    case 'admin': openAdmin(); return true;
+    case 'admin-back': tab = 'settings'; render(); window.scrollTo(0, 0); return true;
+    case 'redeem': await busy(ab, async () => { const r = await Cloud.redeemCode($('#admCode').value); toast(r === 'master' ? 'Freigeschaltet als Master' : 'Freigeschaltet als Trainerin'); await openAdmin(); }); return true;
+    case 'drop-role':
+      if (confirm('Die Verwaltungsrechte auf diesem Handy entfernen? Mit dem Code kannst du dich jederzeit wieder freischalten.')) await busy(ab, async () => { await Cloud.dropRole(); adm = { courses: null, codes: null, openCourse: null, courseMembers: {} }; await openAdmin(); });
+      return true;
+    case 'tcode-new': showTrainerCodeForm(); return true;
+    case 'tcode-save': {
+      const name = ($('#tName').value || '').trim(), courses = [...document.querySelectorAll('.tCourse:checked')].map(x => x.value);
+      if (!name) { toast('Bitte einen Namen eingeben.'); return true; }
+      if (!courses.length) { toast('Bitte mindestens einen Kurs wählen.'); return true; }
+      await busy(ab, async () => { const code = await Cloud.createTrainerCode(name, courses); closeModal(); await loadAdminData(); render(); toast('Trainer-Code ' + code + ' erstellt'); });
+      return true;
+    }
+    case 'tcode-toggle': await busy(ab, async () => { await Cloud.setTrainerCode(id, { active: ab.dataset.active !== '1' }); await loadAdminData(); render(); }); return true;
+    case 'ex-new': showExForm(null); return true;
+    case 'ex-edit': showExForm(id); return true;
+    case 'ex-save': await saveExForm(ab); return true;
+    case 'ex-del':
+      if (confirm('Diese Übung endgültig löschen?')) await busy(ab, async () => { await Cloud.deleteExercise(formId); closeModal(); await syncExercises(true); toast('Gelöscht'); render(); });
+      return true;
+    case 'ex-move': {
+      const i = EX_ALL.findIndex(e => e.id === id), j = i + Number(ab.dataset.dir);
+      if (j < 0 || j >= EX_ALL.length) return true;
+      const list = [...EX_ALL]; [list[i], list[j]] = [list[j], list[i]];
+      await busy(ab, async () => {
+        await Cloud.updateExercises(list.map((e, k) => ({ id: e.id, data: { order: k + 1 } })).filter((c, k) => list[k].order !== k + 1));
+        await syncExercises(true); render();
+      });
+      return true;
+    }
+    case 'ex-import': await importStart(ab); return true;
+    case 'img-pick': $('#fImgFile').click(); return true;
+    case 'img-remove': formImg = null; $('#fImgBox').innerHTML = '<span>Kein Foto</span>'; $('#fImgDel').style.display = 'none'; return true;
+    case 'course-new': {
+      const name = prompt('Name des Kurses', `Kurs ${(adm.courses || []).length + 1}`);
+      if (name && name.trim()) await busy(ab, async () => { await Cloud.createCourse(name); await loadAdminData(); render(); });
+      return true;
+    }
+    case 'course-members':
+      if (adm.openCourse === id) { adm.openCourse = null; render(); return true; }
+      await busy(ab, async () => { adm.courseMembers[id] = (await Cloud.members(id)).sort((a, b) => String(a.dog).localeCompare(String(b.dog))); adm.openCourse = id; render(); });
+      return true;
+    case 'member-remove':
+      if (confirm('Diesen Teilnehmer aus dem Kurs entfernen? Er kann danach nicht mehr beitreten.')) {
+        await busy(ab, async () => { await Cloud.removeMember(ab.dataset.course, id); adm.courseMembers[ab.dataset.course] = (adm.courseMembers[ab.dataset.course] || []).filter(m => m.id !== id); render(); });
+      }
+      return true;
+    case 'ranking-reset':
+      if (confirm('Gesamt-Rangliste neu starten? Alle beginnen wieder bei 0 XP. Das Training der Teilnehmer bleibt erhalten.')) {
+        await busy(ab, async () => { await Cloud.resetRanking(id, Number(ab.dataset.season)); await loadAdminData(); toast('Rangliste neu gestartet'); render(); });
+      }
+      return true;
+  }
+  return false;
+}
+document.addEventListener('change', async ev => {
+  if (ev.target.id !== 'fImgFile' || !ev.target.files[0]) return;
+  try {
+    const d = await resizeImage(ev.target.files[0]);
+    formImg = d; $('#fImgBox').innerHTML = `<img src="${d}" alt="">`; $('#fImgDel').style.display = '';
+    toast(`Foto verkleinert auf ${Math.round(d.length * 0.75 / 1024)} KB`);
+  } catch (e) { toast(errMsg(e)); }
+  ev.target.value = '';
+});
+
+
+// ---------- Start ----------
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+applyExercises();
 render();
+loadImagesFromIDB().then(() => { if (!T) render(); });
+syncExercises().then(() => { if (S.cloud.courseId) syncMember(); });
 if (!S.settings.onboarded) showOnboarding();
+else if (new URLSearchParams(location.search).get('kurs') && !S.cloud.courseId) { tab = 'course'; render(); }
 </script>
 </body>
 </html>

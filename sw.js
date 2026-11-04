@@ -1,30 +1,8 @@
-// Service Worker: Offline-Betrieb
-const VERSION = 'ik-v8';
-const FILES = ['./', 'index.html', 'uebungen.js', 'manifest.json', 'icon-128.png',
-  'icon-180.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png',
-  'ampel.jpg',
-  'beobachten-sitzen.jpg',
-  'blickkontakt.jpg',
-  'decke-draussen.jpg',
-  'drei-leckerli.jpg',
-  'erst-schauen.jpg',
-  'freigabesignal.jpg',
-  'futterbeutel.jpg',
-  'handtarget.jpg',
-  'hunde-beobachtung.jpg',
-  'leckerli-boden.jpg',
-  'leckerli-jackpot.jpg',
-  'name-test.jpg',
-  'parcours.jpg',
-  'richtungswechsel.jpg',
-  'rueckwaerts.jpg',
-  'ruhe-signal.jpg',
-  'schau-weg.jpg',
-  'spielzeug-aus.jpg',
-  'spielzeug-frust.jpg',
-  'tueren.jpg',
-  'umorientierung.jpg',
-  'versteckspiel.jpg'];
+// Service Worker: Offline-Betrieb der App-Dateien
+// (Übungen und Fotos speichert die App selbst auf dem Handy)
+const VERSION = 'ikp-v1';
+const FILES = ['./', 'index.html', 'manifest.json', 'firebase-config.js', 'cloud.bundle.js',
+  'icon-128.png', 'icon-180.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
