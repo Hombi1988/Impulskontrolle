@@ -1,6 +1,6 @@
 // Service Worker: Offline-Betrieb der App-Dateien
 // (Übungen und Fotos speichert die App selbst auf dem Handy)
-const VERSION = 'ikp-v2';
+const VERSION = 'ikp-v3';
 const FILES = ['./', 'index.html', 'manifest.json', 'firebase-config.js', 'cloud.bundle.js',
   'icon-128.png', 'icon-180.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];
 

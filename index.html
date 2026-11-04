@@ -191,6 +191,7 @@ details.ex .ex-img{border-radius:12px;margin-bottom:4px}
 .empty{text-align:center;padding:40px 10px;color:var(--muted)}
 .tabs button{font-size:10.5px}
 .code-in{text-transform:uppercase;letter-spacing:2px;font-weight:600}
+.code-in::placeholder{text-transform:none;letter-spacing:0;font-weight:400}
 .kurs-h{margin-top:18px!important}
 .who{font-size:14px;line-height:1.5;margin-bottom:6px}
 .who .chip{margin:0 4px 0 0}
@@ -238,7 +239,7 @@ details.more summary{font-weight:600;font-size:15px;cursor:pointer}
 
 <header class="top">
   <img src="icon-128.png" alt="">
-  <div><h1>Impulskontrolle</h1><small>by René Homberger</small></div>
+  <div><h1>Impulskontrolle</h1><small>Hunde-Click</small></div>
 </header>
 
 <main id="view"></main>
@@ -668,7 +669,7 @@ function viewSettings() {
     <div style="margin-top:28px"><button class="btn danger" data-act="reset">Alles zurücksetzen</button></div>
     <h2>Verwaltung</h2>
     <button class="btn ghost" data-act="admin">Verwaltung für Trainerinnen</button>
-    <p class="center muted small" style="margin-top:24px">Impulskontrolle · by René Homberger</p>`;
+    <p class="center muted small" style="margin-top:24px">Impulskontrolle · Hunde-Click</p>`;
 }
 
 function render() {
