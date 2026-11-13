@@ -1,7 +1,6 @@
 rules_version = '2';
-// Sicherheitsregeln für die Impulskontrolle-App
-// MASTER_CODE unten durch deinen eigenen, geheimen Master-Code ersetzen
-// (mindestens 10 Zeichen, z. B. «Luna-Feld-2026-x7»). Ändern = alter Code verliert sofort die Rechte.
+// Sicherheitsregeln für die App Hunde-Click
+// MASTER_CODE unten durch deinen eigenen, geheimen Master-Code ersetzen.
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -18,15 +17,11 @@ service cloud.firestore {
         && get(trainerCodePath(myRole().code)).data.active == true;
     }
     function isStaff() { return isMaster() || isTrainer(); }
-    function trainsCourse(courseId) { return isTrainer() && courseId in get(trainerCodePath(myRole().code)).data.courses; }
 
-    // Versionsnummer der Übungen (damit Handys nur bei Änderungen neu laden)
     match /meta/{docId} {
       allow read: if signedIn();
       allow write: if isStaff();
     }
-
-    // Übungen: alle lesen, nur Master und Trainerin schreiben
     match /exercises/{id} {
       allow read: if signedIn();
       allow write: if isStaff();
@@ -37,16 +32,10 @@ service cloud.firestore {
       allow create, update: if isStaff() && request.resource.data.data is string
                             && request.resource.data.data.size() < 900000;
     }
-
-    // Kurse: alle lesen (für Beitritt per Code)
     match /courses/{courseId} {
       allow read: if signedIn();
-      allow create, delete: if isMaster();
-      // Rangliste neu starten / Teilnehmer sperren: Master oder Trainerin dieses Kurses
-      allow update: if isMaster() || (trainsCourse(courseId)
-        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['season', 'removed']));
-
-      // Teilnehmer: jeder schreibt nur seinen eigenen Eintrag, nur erlaubte Felder
+      allow create, update: if isStaff();
+      allow delete: if isMaster();
       match /members/{memberId} {
         allow read: if signedIn();
         allow create, update: if signedIn() && request.auth.uid == memberId
@@ -55,17 +44,17 @@ service cloud.firestore {
           && request.resource.data.dog is string && request.resource.data.dog.size() <= 30
           && request.resource.data.status is map && request.resource.data.status.size() <= 300
           && request.resource.data.seasonXp is int && request.resource.data.weekUps is int;
-        allow delete: if isMaster() || trainsCourse(courseId) || (signedIn() && request.auth.uid == memberId);
+        allow delete: if isStaff() || (signedIn() && request.auth.uid == memberId);
       }
     }
-
-    // Trainer-Codes: nur Master verwaltet; die Trainerin darf ihren eigenen Code lesen
+    match /moves/{uid} {
+      allow read, delete: if signedIn() && request.auth.uid == uid;
+      allow create, update: if isStaff();
+    }
     match /trainerCodes/{code} {
       allow read: if isMaster() || (hasRole() && myRole().code == code);
       allow write: if isMaster();
     }
-
-    // Freischaltung dieses Handys: nur mit gültigem Master- oder aktivem Trainer-Code
     match /roles/{uid} {
       allow read: if signedIn() && request.auth.uid == uid;
       allow create, update: if signedIn() && request.auth.uid == uid
