@@ -233,6 +233,27 @@ details.ex .ex-img{border-radius:12px;margin-bottom:4px}
 details.more{margin-bottom:16px}
 details.more summary{font-weight:600;font-size:15px;cursor:pointer}
 .modal{padding-top:22px}
+.qr{cursor:zoom-in}
+.qrfull{position:fixed;inset:0;z-index:40;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;animation:fade .2s;cursor:zoom-out}
+.qrfull b{font-size:24px}
+.qrbig{width:min(86vw,60vh)}.qrbig svg{width:100%;height:auto;display:block}
+.smsg{font-size:16.5px;line-height:1.45;font-weight:600}.smsg b{color:var(--accent-d)}
+.sdays{display:flex;justify-content:space-between;gap:4px}
+.sday{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:12px;color:var(--muted)}
+.sdot{width:34px;height:34px;border-radius:50%;background:var(--line);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:700}
+.sdot.on{background:var(--accent)}
+.sdot.today{outline:2.5px solid var(--gold);outline-offset:2px}
+.mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.mhead b{font-size:15px;text-transform:none}
+.mhead button{background:var(--soft);border:0;width:36px;height:36px;border-radius:11px;font-size:20px;color:var(--ink)}
+.mhead button:disabled{opacity:.3}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}
+.cal .ch{font-size:11px;color:var(--muted);font-weight:600}
+.cal .cc{height:40px;border-radius:10px;background:var(--soft);font-size:11px;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.cal .cc.on{background:var(--accent-l);color:var(--accent-d);font-weight:600}
+.cal .cc span{font-size:14px;margin-top:2px}
+.cal .cc.e{background:transparent}
+.cal .cc.t{outline:2px solid var(--gold)}
 .cswitch{display:flex;gap:8px;overflow-x:auto;margin:0 -16px 14px;padding:2px 16px 4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .cswitch::-webkit-scrollbar{display:none}
 .cchip{flex:none;border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:8px 14px;font-size:14px;font-weight:600;color:var(--ink)}
@@ -630,41 +651,44 @@ function viewHome() {
 
 function viewStats() {
   if (!S.cloud.courseId) return joinCardHTML();
-  const cur = periodStats(statKind, statOff), prev = periodStats(statKind, statOff - 1);
-  const lbl = statKind === 'week' ? 'Vorwoche' : 'Vormonat';
-  const goal = statKind === 'week' ? S.settings.weekGoal : S.settings.monthGoal;
-  const reached = cur.days >= goal;
-  // Fortschritt in der Periode: Übungen, deren Stand sich verbessert hat
-  const improved = EX.map(e => ({ e, a: masteryAt(e.id, cur.a), b: masteryAt(e.id, cur.b) }))
-    .filter(x => x.b && statusOf(x.b).k > statusOf(x.a).k);
-  const counts = [4, 3, 2, 1, 0].map(k => EX.filter(e => status(e.id).k === k).length);
-  const cols = ['var(--accent)', '#6FB3A2', 'var(--gold)', 'var(--red)', '#C9CEDC'];
-  const names = ['Sitzt', 'Gut dabei', 'Im Aufbau', 'Braucht Training', 'Neu'];
+  // Woche: Mo–So mit Trainingstagen
+  const wa = periodRange('week', 0)[0];
+  const trained = new Set(S.log.map(l => dayKey(l.t)));
+  const today = dayKey(Date.now());
+  const WD = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+  let wdays = 0;
+  const dots = WD.map((n, i) => {
+    const k = dayKey(wa + i * DAY + DAY / 2), on = trained.has(k); if (on) wdays++;
+    return `<div class="sday"><span class="sdot ${on ? 'on' : ''} ${k === today ? 'today' : ''}">${on ? '✓' : ''}</span>${n}</div>`;
+  }).join('');
+  const goal = S.settings.weekGoal, ups = weekUpsNow();
+  const msg = wdays >= goal ? `Wochenziel erreicht – <b>${wdays} von ${goal}</b> Tagen! 🏆`
+    : wdays ? `Diese Woche <b>${wdays} von ${goal}</b> Tagen.` : `Diese Woche noch kein Training – heute ist ein guter Tag. 🐾`;
+  const upMsg = ups ? ` <b>${ups} ${ups === 1 ? 'Übung ist' : 'Übungen sind'}</b> aufgestiegen.` : '';
+  const cheer = wdays && wdays < goal ? ' Weiter so! 🐾' : '';
+  // Monat als Kalender
+  const [ma, mb] = periodRange('month', statOff);
+  const md = new Date(ma), nDays = Math.round((mb - ma) / DAY), lead = (md.getDay() + 6) % 7;
+  let mcount = 0, cells = '';
+  for (let i = 0; i < lead; i++) cells += '<div class="cc e"></div>';
+  for (let d = 1; d <= nDays; d++) {
+    const k = dayKey(ma + (d - 1) * DAY + DAY / 2), on = trained.has(k); if (on) mcount++;
+    cells += `<div class="cc ${on ? 'on' : ''} ${k === today ? 't' : ''}">${d}${on ? '<span>🐾</span>' : ''}</div>`;
+  }
+  const mname = md.toLocaleDateString('de-CH', { month: 'long' }) + (md.getFullYear() !== new Date().getFullYear() ? ' ' + md.getFullYear() : '');
+  // Stand der Übungen
+  const counts = [[4, 'Sitzt', 'var(--accent)'], [3, 'Gut dabei', '#6FB3A2'], [2, 'Im Aufbau', 'var(--gold)'], [1, 'Braucht Training', 'var(--red)'], [0, 'Neu', '#E4E7EF']]
+    .map(([k, t, c]) => ({ t, c, n: EX.filter(e => status(e.id).k === k).length })).filter(x => x.n);
   return courseSwitchHTML() + `
-    <div class="seg"><button class="${statKind === 'week' ? 'on' : ''}" data-stat="week">Woche</button><button class="${statKind === 'month' ? 'on' : ''}" data-stat="month">Monat</button></div>
-    <div class="period"><button data-act="prev" aria-label="zurück">‹</button><b>${periodTitle(statKind, cur.a)}</b><button data-act="next" aria-label="weiter" ${statOff >= 0 ? 'disabled' : ''}>›</button></div>
-    <div class="card ${reached ? '' : 'soft'}" style="${reached ? 'border-color:var(--accent)' : ''}">
-      <div class="goal"><span>${reached ? '🏆 ' : ''}${statKind === 'week' ? 'Wochenziel' : 'Monatsziel'}</span><span>${cur.days} / ${goal} Tage</span></div>
-      <div class="bar green"><i style="width:${Math.min(100, cur.days / goal * 100)}%"></i></div>
-      ${reached ? `<div class="small" style="margin-top:8px;color:var(--accent-d);font-weight:600">Ziel erreicht – stark!</div>` : ''}
-    </div>
-    <div class="grid2">
-      <div class="kpi"><b>${cur.days}</b><span>Trainingstage</span>${delta(cur.days, prev.days, lbl)}</div>
-      <div class="kpi"><b>${cur.n}</b><span>Übungen</span>${delta(cur.n, prev.n, lbl)}</div>
-      <div class="kpi"><b>${cur.avg ? fmt1(cur.avg) : '–'}</b><span>Ø Bewertung (1–3)</span>${cur.avg && prev.avg ? delta(cur.avg, prev.avg, lbl, true) : '<em>&nbsp;</em>'}</div>
-      <div class="kpi"><b style="color:var(--gold)">${cur.xp}</b><span>XP gesammelt</span>${delta(cur.xp, prev.xp, lbl)}</div>
-    </div>
-    <h2>Übungen pro Tag</h2>
-    <div class="card">${chart(cur, statKind)}
-      <div class="legend" style="margin-top:8px"><span><i style="background:var(--accent)"></i>meist super</span><span><i style="background:#6FB3A2"></i>gut</span><span><i style="background:var(--gold)"></i>holprig</span></div></div>
-    ${improved.length ? `<h2>Level up bei den Übungen</h2><div class="card">${improved.map(x => {
-      const A = statusOf(x.a), B = statusOf(x.b);
-      return `<div class="focus-item" style="display:block"><div>${esc(x.e.titel)}</div><div style="margin-top:6px"><span class="chip st-${A.c}" style="margin:0">${A.t}</span> <span class="muted">→</span> <span class="chip st-${B.c}" style="margin:0">${B.t}</span></div></div>`; }).join('')}</div>` : ''}
-    <h2>Stand aller Übungen</h2>
+    <div class="card soft"><div class="smsg">${msg}${upMsg}${cheer}</div></div>
+    <div class="card"><div class="sdays">${dots}</div></div>
     <div class="card">
-      <div class="stack-bar">${counts.map((c, i) => c ? `<div style="flex:${c};background:${cols[i]}"></div>` : '').join('')}</div>
-      <div class="legend">${counts.map((c, i) => `<span><i style="background:${cols[i]}"></i>${names[i]} ${c}</span>`).join('')}</div>
-    </div>`;
+      <div class="mhead"><button data-act="prev" aria-label="Vormonat">‹</button><b>${mname} · ${mcount} ${mcount === 1 ? 'Tag' : 'Tage'} 🐾</b><button data-act="next" aria-label="nächster Monat" ${statOff >= 0 ? 'disabled' : ''}>›</button></div>
+      <div class="cal">${WD.map(n => `<div class="ch">${n}</div>`).join('')}${cells}</div>
+    </div>
+    ${EX.length ? `<div class="card">
+      <div class="stack-bar" style="margin-top:0">${counts.map(x => `<div style="flex:${x.n};background:${x.c}"></div>`).join('')}</div>
+      <div class="legend">${counts.map(x => `<span><i style="background:${x.c}"></i>${x.t} ${x.n}</span>`).join('')}</div></div>` : ''}`;
 }
 
 function viewList() {
@@ -774,6 +798,9 @@ document.addEventListener('click', ev => {
     case 'close-bg': if (t === ab && !$('#onbGo') && !$('.exform')) closeModal(); break;
     case 'onb-staff': S.settings.onboarded = true; save(); closeModal(); openAdmin(); break;
     case 'join-open': showJoinModal(); break;
+    case 'qr-big':
+      $('#modal').innerHTML = `<div class="qrfull" data-act="close"><b>${esc(ab.dataset.name)}</b><div class="qrbig">${Cloud.qrSvg(joinLink(ab.dataset.code), 8)}</div>
+        <div class="code" style="font-size:34px">${esc(ab.dataset.code)}</div><span class="muted small">Zum Schliessen antippen</span></div>`; break;
     case 'onbgo': finishOnboarding(); break;
     case 'prev': statOff--; render(); break;
     case 'next': if (statOff < 0) { statOff++; render(); } break;
@@ -1149,7 +1176,7 @@ function viewAdmin() {
       ${cs.map(c => `<div class="card">
         <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
           <div><b style="font-size:17px">${esc(c.name)}</b><div class="muted small">Kurscode für Teilnehmer</div><div class="code">${esc(c.code)}</div></div>
-          <div class="qr">${Cloud.qrSvg(joinLink(c.code), 3)}</div></div>
+          <div class="qr" data-act="qr-big" data-code="${esc(c.code)}" data-name="${esc(c.name)}" title="Antippen zum Vergrössern">${Cloud.qrSvg(joinLink(c.code), 3)}</div></div>
         <p class="small muted" style="word-break:break-all;margin:8px 0">${esc(joinLink(c.code))}</p>
         <div class="row" style="flex-wrap:wrap">
           <button class="btn inline" data-act="course-view" data-id="${c.id}">Übersicht</button>
