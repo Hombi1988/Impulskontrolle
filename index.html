@@ -958,11 +958,13 @@ async function syncMember() {
     if ((c.season || 1) !== S.cloud.season) { S.cloud.season = c.season || 1; S.cloud.seasonBase = S.xp; }
     const status = {};
     EX_ALL.forEach(e => { const k = status_k(e.id); if (k) status[e.id] = k; });
-    await Cloud.pushMember(c.id, {
+    const md = {
       dog: (dogName() || 'Hund').slice(0, 30), status,
       seasonXp: Math.max(0, Math.round(S.xp - S.cloud.seasonBase)), season: S.cloud.season,
-      week: weekKey(Date.now()), weekUps: weekUpsNow()
-    });
+      week: weekKey(Date.now()), weekUps: weekUpsNow(), last: lastTraining()
+    };
+    try { await Cloud.pushMember(c.id, md); }
+    catch (e) { if (e && e.code === 'permission-denied') { delete md.last; await Cloud.pushMember(c.id, md); } else throw e; }  // ältere Regeln ohne «last»
     save(); members = null;
   } catch (e) { console.warn('Kurs abgleichen', e); }
 }

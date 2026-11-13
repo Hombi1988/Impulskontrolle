@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hunde-Click · Verwaltung</title>
+<link rel="icon" href="icon-192.png" type="image/png">
+<style>
+:root{
+  --accent:#2E7D6B; --accent-d:#215C4F; --accent-l:#E6F1EE;
+  --gold:#E8A33D; --gold-l:#FDF2E1; --red:#C9573F; --red-l:#FBE9E4;
+  --ink:#1E2A28; --muted:#6B7774; --line:#E4E9E7; --soft:#F4F7F6; --bg:#F7F9F8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;font-size:15px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+aside{background:#fff;border-right:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:10px;padding:0 6px 18px}
+.brand img{width:44px;height:44px;border-radius:12px}
+.brand b{display:block;font-size:18px}.brand small{color:var(--muted);font-size:12px}
+.nav{border:0;background:none;text-align:left;padding:10px 12px;border-radius:10px;font-weight:600;color:var(--muted);display:flex;gap:10px;align-items:center}
+.nav:hover{background:var(--soft)}
+.nav.on{background:var(--accent-l);color:var(--accent-d)}
+.who{margin-top:auto;font-size:13px;color:var(--muted);padding:10px 12px;border-top:1px solid var(--line)}
+.who b{display:block;color:var(--ink);font-size:14px;margin:2px 0 8px}
+main{padding:24px 32px 60px;min-width:0}
+.head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.head h1{font-size:24px;margin:0;letter-spacing:-.3px}
+.csel{display:flex;align-items:center;gap:8px}
+.csel label{color:var(--muted);font-weight:600;font-size:13px}
+.input,select.input,textarea.input{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#fff;width:100%}
+.input:focus{outline:2px solid var(--accent);border-color:transparent}
+textarea.input{resize:vertical;line-height:1.45}
+.btn{border:0;border-radius:10px;padding:10px 16px;font-weight:650;background:var(--accent);color:#fff;white-space:nowrap}
+.btn:hover{background:var(--accent-d)}
+.btn.ghost{background:var(--soft);color:var(--ink)}.btn.ghost:hover{background:var(--line)}
+.btn.danger{background:var(--red-l);color:var(--red)}
+.btn.sm{padding:6px 11px;font-size:13px;border-radius:8px}
+.btn:disabled{opacity:.45;cursor:default}
+.link{border:0;background:none;color:var(--accent);font-weight:600;padding:0}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+.grid{display:grid;gap:16px}
+.g3{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.g2{grid-template-columns:1fr 1fr}
+.muted{color:var(--muted)}.small{font-size:13px}
+h2{font-size:17px;margin:0 0 12px}
+.code{font-size:26px;font-weight:800;letter-spacing:3px}
+.qr svg{width:120px;height:120px;display:block}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.chip{display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--soft);color:var(--muted)}
+.k0{background:#E4E7EF}.k1{background:var(--red)}.k2{background:var(--gold)}.k3{background:#6FB3A2}.k4{background:var(--accent)}
+.st-k0{background:#EEF0F6;color:#5B6382}.st-k1{background:var(--red-l);color:var(--red)}.st-k2{background:var(--gold-l);color:#A86C10}.st-k3{background:var(--accent-l);color:var(--accent-d)}.st-k4{background:var(--accent);color:#fff}
+table.t{width:100%;border-collapse:collapse;background:#fff}
+table.t th,table.t td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+table.t th{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:600;background:var(--soft)}
+table.t tr:last-child td{border-bottom:0}
+.tablewrap{border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.warn{color:var(--red);font-weight:600}
+.mx-wrap{overflow:auto;max-height:70vh;border:1px solid var(--line);border-radius:16px;background:#fff}
+.mx{border-collapse:separate;border-spacing:0}
+.mx th,.mx td{padding:7px 10px;border-bottom:1px solid var(--line)}
+.mx thead th{position:sticky;top:0;background:var(--soft);z-index:2;font-size:13px;white-space:nowrap}
+.mx tbody th{position:sticky;left:0;background:#fff;z-index:1;text-align:left;font-weight:500;min-width:260px;max-width:340px}
+.mx thead th:first-child{left:0;z-index:3}
+.mx td{text-align:center}
+.mx .sq{display:inline-block;width:20px;height:20px;border-radius:5px;vertical-align:middle}
+.mx .sum{color:var(--muted);font-size:12px;white-space:nowrap;text-align:left}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.rank{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.rank:last-child{border-bottom:0}
+.rank .p{width:30px;text-align:center;font-size:17px;font-weight:700;color:var(--muted)}
+.rank .n{flex:1;font-weight:600}.rank .v{font-weight:700;color:var(--gold)}.rank .v small{color:var(--muted);font-weight:500}
+.ex-layout{display:grid;grid-template-columns:330px 1fr 340px;gap:18px;align-items:start}
+.exlist{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;max-height:calc(100vh - 150px);overflow-y:auto}
+.exitem{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid var(--line);cursor:pointer}
+.exitem:hover{background:var(--soft)}
+.exitem.on{background:var(--accent-l)}
+.exitem.off .t{opacity:.5}
+.exitem img,.exitem .ni{width:56px;height:36px;object-fit:cover;border-radius:6px;background:var(--soft);flex:none;display:flex;align-items:center;justify-content:center}
+.exitem .t{flex:1;min-width:0;font-weight:600;font-size:14px}
+.exitem .t small{display:block;color:var(--muted);font-weight:500;font-size:12px}
+.exitem .mv{display:flex;flex-direction:column;gap:2px}
+.exitem .mv button{border:1px solid var(--line);background:#fff;border-radius:6px;width:26px;height:20px;font-size:11px;line-height:1;padding:0}
+.exitem .mv button:disabled{opacity:.25}
+.form .f{margin-bottom:14px}
+.form label{display:block;font-weight:600;margin-bottom:5px;font-size:14px}
+.form .hint{font-size:12px;color:var(--muted);margin-top:4px}
+.check{display:flex;align-items:center;gap:8px;font-weight:500!important}
+.check input{width:18px;height:18px;accent-color:var(--accent)}
+.drop{border:2px dashed var(--line);border-radius:12px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:var(--muted);background:var(--soft);overflow:hidden;cursor:pointer;text-align:center;font-size:14px}
+.drop.over{border-color:var(--accent);background:var(--accent-l)}
+.drop img{width:100%;height:100%;object-fit:cover}
+.preview{position:sticky;top:24px}
+.phone{border:9px solid #1E2A28;border-radius:34px;overflow:hidden;background:#fff;height:620px;overflow-y:auto}
+.phone .pimg{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--soft)}
+.phone .pc{padding:14px 16px 20px;font-size:14px;line-height:1.45}
+.phone h3{font-size:19px;margin:0 0 8px}
+.phone p{margin:0 0 9px}
+.phone ol,.phone ul{margin:0 0 10px;padding-left:20px}.phone li{margin-bottom:5px}
+.phone .tipp{background:var(--gold-l);border-radius:10px;padding:9px 11px;margin-top:10px;font-size:13px}
+.phone .freq{background:var(--accent-l);color:var(--accent-d)}
+.empty{color:var(--muted);text-align:center;padding:40px}
+.login{max-width:420px;margin:12vh auto;text-align:center}
+.login img{width:84px;height:84px;border-radius:22px;margin-bottom:14px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 18px;border-radius:12px;z-index:90;font-size:14px}
+.modal-bg{position:fixed;inset:0;background:rgba(20,30,28,.45);display:flex;align-items:center;justify-content:center;z-index:80}
+.modal{background:#fff;border-radius:18px;padding:24px;width:420px;max-width:92vw}
+.banner{background:var(--gold-l);border-radius:12px;padding:12px 14px;margin-bottom:16px;font-size:14px}
+#print{display:none}
+@media print{
+  @page{size:A4;margin:0}
+  body{background:#fff}
+  .app,.toast,.modal-bg{display:none!important}
+  #print{display:flex!important;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;padding:20mm;font-family:inherit}
+  #print img.logo{width:42mm;height:42mm;border-radius:10mm}
+  #print h1{font-size:34pt;margin:8mm 0 2mm}
+  #print .sub{font-size:15pt;color:#6B7774}
+  #print .q svg{width:95mm;height:95mm;margin:10mm 0 6mm}
+  #print .c{font-size:30pt;font-weight:800;letter-spacing:5px}
+  #print ol{text-align:left;font-size:13pt;line-height:1.6;margin-top:10mm}
+  #print .foot{margin-top:10mm;color:#6B7774;font-size:11pt}
+}
+@media (max-width:1100px){.ex-layout{grid-template-columns:300px 1fr}.preview{display:none}}
+@media (max-width:760px){.app{grid-template-columns:1fr}aside{position:static;height:auto}.g2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div id="modal"></div>
+<div id="print"></div>
+<script src="firebase-config.js"></script>
+<script src="cloud.bundle.js"></script>
+<script>
+'use strict';
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const DAY = 864e5;
+const dayKey = ts => { const d = new Date(ts); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+const weekKey = ts => { const d = new Date(ts); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return dayKey(d.getTime()); };
+const midnight = ts => { const d = new Date(ts); d.setHours(0, 0, 0, 0); return d.getTime(); };
+const daysSince = ts => Math.round((midnight(Date.now()) - midnight(ts)) / DAY);
+const relDay = ts => { const n = daysSince(ts); return n === 0 ? 'heute' : n === 1 ? 'gestern' : `vor ${n} Tagen`; };
+const STATUS = ['Neu', 'Braucht Training', 'Im Aufbau', 'Gut dabei', 'Sitzt'];
+const appBase = location.origin + location.pathname.replace(/admin\.html$/, '');
+const joinLink = code => appBase + '?kurs=' + encodeURIComponent(code);
+const lines = s => String(s || '').split('\n').map(x => x.trim()).filter(Boolean);
+const paras = s => String(s || '').split(/\n\s*\n/).map(x => x.replace(/\s*\n\s*/g, ' ').trim()).filter(Boolean);
+const medal = pos => ['🥇', '🥈', '🥉'][pos - 1] || `${pos}.`;
+
+let role = undefined, A = { courses: [], ex: [], img: {}, members: {}, codes: [], cid: null, view: 'kurse', sel: null, rank: 'week' };
+let toastT;
+function toast(m) { document.querySelectorAll('.toast').forEach(t => t.remove()); const d = document.createElement('div'); d.className = 'toast'; d.textContent = m; document.body.appendChild(d); clearTimeout(toastT); toastT = setTimeout(() => d.remove(), 3200); }
+const errMsg = e => (e && e.code === 'permission-denied') ? 'Dafür fehlt die Berechtigung.' : (e && e.message && !e.code ? e.message : 'Das hat nicht geklappt. Bitte nochmals versuchen.');
+async function busy(btn, fn) {
+  if (btn) { btn.disabled = true; btn.dataset.t = btn.textContent; btn.textContent = '…'; }
+  try { return await fn(); } catch (e) { console.warn(e); toast(errMsg(e)); }
+  finally { if (btn && btn.isConnected) { btn.disabled = false; btn.textContent = btn.dataset.t; } }
+}
+const course = () => A.courses.find(c => c.id === A.cid);
+const courseEx = (cid = A.cid) => A.ex.filter(e => e.courseId === cid).sort((a, b) => (a.order || 0) - (b.order || 0) || String(a.title).localeCompare(String(b.title)));
+const imgOf = e => e.imgV ? (A.img[e.id] || '') : (e.imgUrl || '');
+
+// ---------- Laden ----------
+async function loadAll() {
+  const [cs, ex] = await Promise.all([Cloud.courses(), Cloud.exercises()]);
+  A.courses = cs.sort((a, b) => String(a.name).localeCompare(String(b.name)));
+  A.ex = ex;
+  if (!A.cid || !A.courses.some(c => c.id === A.cid)) A.cid = (A.courses[0] || {}).id || null;
+  if (role.role === 'master') A.codes = (await Cloud.trainerCodes()).sort((a, b) => (a.created || 0) - (b.created || 0));
+  await Promise.all(A.courses.map(async c => { try { A.members[c.id] = await Cloud.members(c.id); } catch (e) { A.members[c.id] = []; } }));
+  render();
+  for (const e of A.ex) if (e.imgV && !A.img[e.id]) { try { A.img[e.id] = await Cloud.image(e.id); } catch (er) {} }
+  render();
+}
+async function reloadMembers(cid = A.cid) { A.members[cid] = await Cloud.members(cid); }
+async function reloadEx() { A.ex = await Cloud.exercises(); for (const e of A.ex) if (e.imgV && !A.img[e.id]) { try { A.img[e.id] = await Cloud.image(e.id); } catch (er) {} } }
+
+// ---------- Ansichten ----------
+function viewLogin() {
+  return `<div class="login card">
+    <img src="icon-192.png" alt=""><h1 style="margin:0 0 4px">Hunde-Click</h1><p class="muted" style="margin:0 0 22px">Verwaltung für Trainerinnen</p>
+    ${role && role.inactive ? '<div class="banner">Dein Trainer-Code wurde deaktiviert.</div>' : ''}
+    ${role && role.invalid ? '<div class="banner">Der Master-Code wurde geändert. Bitte den neuen Code eingeben.</div>' : ''}
+    <input class="input" id="code" placeholder="Freischaltcode" autocomplete="off" style="text-align:center;font-size:18px;letter-spacing:1px">
+    <button class="btn" data-act="redeem" style="width:100%;margin-top:12px;padding:13px">Freischalten</button>
+    <p class="muted small" style="margin:16px 0 0">Den Code bekommst du vom Administrator. Die Freischaltung gilt für diesen Browser.</p></div>`;
+}
+function courseSelect() {
+  return `<div class="csel"><label for="cid">Kurs</label><select class="input" id="cid" style="width:auto;min-width:220px">${A.courses.map(c => `<option value="${esc(c.id)}" ${c.id === A.cid ? 'selected' : ''}>${esc(c.name)}</option>`).join('')}</select></div>`;
+}
+function viewKurse() {
+  return `<div class="head"><h1>Kurse</h1><button class="btn" data-act="course-new">+ Neuer Kurs</button></div>
+  <div class="grid g3">${A.courses.map(c => {
+    const ms = A.members[c.id] || [], nex = courseEx(c.id).filter(e => !e.hidden).length;
+    return `<div class="card">
+      <div style="display:flex;justify-content:space-between;gap:12px">
+        <div><h2 style="margin:0 0 4px">${esc(c.name)}</h2><div class="muted small">${ms.length} ${ms.length === 1 ? 'Hund' : 'Hunde'} · ${nex} Übungen</div>
+        <div class="muted small" style="margin-top:12px">Kurscode</div><div class="code">${esc(c.code)}</div></div>
+        <div class="qr">${Cloud.qrSvg(joinLink(c.code), 4)}</div></div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn sm" data-act="go" data-v="uebersicht" data-id="${c.id}">Übersicht</button>
+        <button class="btn ghost sm" data-act="go" data-v="teilnehmer" data-id="${c.id}">Teilnehmer</button>
+        <button class="btn ghost sm" data-act="go" data-v="uebungen" data-id="${c.id}">Übungen</button>
+        <button class="btn ghost sm" data-act="print" data-id="${c.id}">Aushang drucken</button>
+        <button class="btn ghost sm" data-act="rename" data-id="${c.id}">Umbenennen</button>
+      </div></div>`; }).join('') || '<div class="empty">Noch kein Kurs.</div>'}</div>`;
+}
+function rankingHTML(ms, season) {
+  const wk = weekKey(Date.now());
+  const val = m => A.rank === 'week' ? (m.week === wk ? m.weekUps || 0 : 0) : (m.season === season ? m.seasonXp || 0 : 0);
+  const l = [...ms].sort((a, b) => val(b) - val(a) || String(a.dog).localeCompare(String(b.dog)));
+  return `<div class="row" style="margin-bottom:10px"><button class="btn ${A.rank === 'week' ? '' : 'ghost'} sm" data-act="rank" data-v="week">Fortschritt diese Woche</button><button class="btn ${A.rank === 'all' ? '' : 'ghost'} sm" data-act="rank" data-v="all">Gesamt</button></div>
+    ${l.map(m => `<div class="rank"><span class="p">${val(m) ? medal(1 + l.filter(o => val(o) > val(m)).length) : '·'}</span><span class="n">${esc(m.dog)}</span><span class="v">${val(m)} <small>${A.rank === 'week' ? (val(m) === 1 ? 'Aufstieg' : 'Aufstiege') : 'XP'}</small></span></div>`).join('') || '<p class="muted">Noch keine Teilnehmer.</p>'}`;
+}
+function viewUebersicht() {
+  const c = course(); if (!c) return '<div class="empty">Noch kein Kurs.</div>';
+  const all = [...(A.members[c.id] || [])].sort((a, b) => String(a.dog).localeCompare(String(b.dog)));
+  A.pick = new Set([...(A.pick || [])].filter(id => all.some(m => m.id === id)));
+  const ms = A.pick.size ? all.filter(m => A.pick.has(m.id)) : all;
+  const exs = courseEx().filter(e => !e.hidden);
+  const wk = weekKey(Date.now());
+  const active = all.filter(m => m.last && daysSince(m.last) <= 7).length;
+  const ups = all.reduce((s, m) => s + (m.week === wk ? m.weekUps || 0 : 0), 0);
+  const weak = exs.map(e => ({ e, n: ms.filter(m => (m.status || {})[e.id] === 1).length })).filter(x => x.n).sort((a, b) => b.n - a.n).slice(0, 3);
+  const picker = all.length > 1 ? `<div class="row" style="margin-bottom:12px"><button class="btn ${A.pick.size ? 'ghost' : ''} sm" data-act="pick" data-id="">Alle</button>${all.map(m => `<button class="btn ${A.pick.has(m.id) ? '' : 'ghost'} sm" data-act="pick" data-id="${m.id}">${esc(m.dog)}</button>`).join('')}</div>` : '';
+  const grid = exs.length && ms.length ? `${picker}<div class="mx-wrap"><table class="mx"><thead><tr><th>Übung</th>${ms.map(m => `<th>${esc(m.dog)}</th>`).join('')}<th>Sitzt bei</th></tr></thead><tbody>
+    ${exs.map(e => { const n4 = ms.filter(m => (m.status || {})[e.id] >= 3).length; return `<tr><th>${esc(e.title)}</th>${ms.map(m => { const k = (m.status || {})[e.id] || 0; return `<td title="${esc(m.dog)}: ${STATUS[k]}"><i class="sq k${k}"></i></td>`; }).join('')}<td class="sum">${n4} von ${ms.length}</td></tr>`; }).join('')}
+    </tbody></table></div>
+    <div class="legend"><span><i class="k4"></i>Sitzt</span><span><i class="k3"></i>Gut dabei</span><span><i class="k2"></i>Im Aufbau</span><span><i class="k1"></i>Braucht Training</span><span><i class="k0"></i>Neu</span><span>· «Sitzt bei» zählt «Gut dabei» und «Sitzt»</span></div>` : '<p class="muted">Noch keine Daten.</p>';
+  return `<div class="head"><h1>Übersicht</h1><div class="row">${courseSelect()}<button class="btn ghost" data-act="refresh">Aktualisieren</button></div></div>
+    <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px">
+      <div class="card"><div class="muted small">Hunde im Kurs</div><div class="code" style="letter-spacing:0">${all.length}</div></div>
+      <div class="card"><div class="muted small">Aktiv in den letzten 7 Tagen</div><div class="code" style="letter-spacing:0">${active}</div></div>
+      <div class="card"><div class="muted small">Aufstiege diese Woche</div><div class="code" style="letter-spacing:0;color:var(--gold)">${ups}</div></div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 340px;align-items:start">
+      <div><h2>Wer kann was?</h2>${grid}</div>
+      <div class="grid">
+        <div class="card"><h2>Rangliste</h2>${rankingHTML(all, c.season || 1)}</div>
+        ${weak.length ? `<div class="card"><h2>Braucht am meisten Training</h2>${weak.map(x => `<div class="rank"><span class="n" style="font-weight:500">${esc(x.e.title)}</span><span class="chip st-k1">${x.n} ${x.n === 1 ? 'Hund' : 'Hunde'}</span></div>`).join('')}<p class="muted small" style="margin:8px 0 0">Ein Thema für die nächste Lektion?</p></div>` : ''}
+      </div>
+    </div>`;
+}
+function viewTeilnehmer() {
+  const c = course(); if (!c) return '<div class="empty">Noch kein Kurs.</div>';
+  const wk = weekKey(Date.now());
+  const ms = [...(A.members[c.id] || [])].sort((a, b) => String(a.dog).localeCompare(String(b.dog)));
+  const others = A.courses.filter(x => x.id !== c.id);
+  return `<div class="head"><h1>Teilnehmer</h1><div class="row">${courseSelect()}<button class="btn ghost" data-act="ranking-reset">Rangliste neu starten</button></div></div>
+  ${ms.length ? `<div class="tablewrap"><table class="t"><thead><tr><th>Hund</th><th>Letztes Training</th><th>Aufstiege diese Woche</th><th>XP (Gesamt-Rangliste)</th><th>Übungen «Sitzt»</th><th style="width:330px">Aktionen</th></tr></thead><tbody>
+    ${ms.map(m => { const n4 = Object.values(m.status || {}).filter(k => k === 4).length; const long = m.last && daysSince(m.last) >= 14;
+      return `<tr><td><b>${esc(m.dog)}</b></td>
+        <td>${m.last ? `<span class="${long ? 'warn' : ''}">${relDay(m.last)}</span>` : '<span class="muted">noch nicht übermittelt</span>'}</td>
+        <td>${m.week === wk ? m.weekUps || 0 : 0}</td><td>${m.season === (c.season || 1) ? m.seasonXp || 0 : 0}</td><td>${n4}</td>
+        <td><div class="row">${others.length ? `<select class="input" data-move="${m.id}" style="width:auto;padding:6px 8px;font-size:13px"><option value="">Verschieben nach …</option>${others.map(o => `<option value="${o.id}">${esc(o.name)}</option>`).join('')}</select>` : ''}
+          <button class="btn danger sm" data-act="remove" data-id="${m.id}" data-dog="${esc(m.dog)}">Entfernen</button></div></td></tr>`; }).join('')}
+  </tbody></table></div>
+  <p class="muted small" style="margin-top:10px">Rot: seit 14 Tagen oder länger kein Training. «Letztes Training» erscheint, sobald der Teilnehmer die aktuelle App-Version geöffnet hat. Entfernte Teilnehmer können diesem Kurs nicht mehr beitreten – für einen Gruppenwechsel «Verschieben» verwenden.</p>` : '<div class="empty">Noch keine Teilnehmer in diesem Kurs.</div>'}`;
+}
+function previewHTML(d, img) {
+  const list = (a, num) => `<${num ? 'ol' : 'ul'}>${a.map(x => `<li>${esc(x)}</li>`).join('')}</${num ? 'ol' : 'ul'}>`;
+  return `<div class="phone">${img ? `<img class="pimg" src="${img}" alt="">` : '<div class="pimg"></div>'}<div class="pc">
+    <h3>${esc(d.title || 'Titel der Übung')}</h3>
+    ${d.freq ? `<span class="chip freq">${esc(d.freq)}</span>` : ''} <span class="chip st-k0">Neu</span>
+    <div style="margin-top:10px">${paras(d.intro).map(p => `<p>${esc(p)}</p>`).join('')}
+    ${lines(d.steps).length ? list(lines(d.steps), d.numbered) : ''}
+    ${lines(d.extra).length ? `${d.extraTitle ? `<p>${esc(d.extraTitle)}</p>` : ''}${list(lines(d.extra), false)}` : ''}
+    ${d.note ? `<div class="tipp">${esc(d.note)}</div>` : ''}</div></div></div>`;
+}
+let F = null; // Formular: { id, img (undefined|null|dataurl), cur }
+function formData() {
+  const v = id => ($('#' + id) ? $('#' + id).value : '').trim();
+  return { title: v('fTitle'), freq: v('fFreq'), intro: v('fIntro'), steps: v('fSteps'), numbered: $('#fNum') ? $('#fNum').checked : false,
+    extraTitle: v('fExTitle'), extra: v('fExtra'), note: v('fNote'), hidden: $('#fHidden') ? $('#fHidden').checked : false, courseId: v('fCourse') };
+}
+function formImg() { return F.img === undefined ? (F.cur ? imgOf(F.cur) : '') : (F.img || ''); }
+function viewUebungen() {
+  const c = course(); if (!c) return '<div class="empty">Lege zuerst einen Kurs an.</div>';
+  const list = courseEx();
+  if (!F) F = { id: null, img: undefined, cur: null };
+  const e = F.cur || {};
+  const items = list.map((x, i) => `<div class="exitem ${x.hidden ? 'off' : ''} ${F.id === x.id ? 'on' : ''}" data-act="ex-open" data-id="${x.id}">
+      ${imgOf(x) ? `<img src="${imgOf(x)}" alt="">` : '<span class="ni">🐾</span>'}
+      <div class="t">${esc(x.title)}${x.hidden ? '<small>ausgeblendet</small>' : ''}</div>
+      <div class="mv"><button data-act="ex-move" data-id="${x.id}" data-dir="-1" ${i === 0 ? 'disabled' : ''} title="nach oben">▲</button><button data-act="ex-move" data-id="${x.id}" data-dir="1" ${i === list.length - 1 ? 'disabled' : ''} title="nach unten">▼</button></div></div>`).join('');
+  return `<div class="head"><h1>Übungen</h1><div class="row">${courseSelect()}<button class="btn" data-act="ex-new">+ Neue Übung</button></div></div>
+  <div class="ex-layout">
+    <div class="exlist">${items || '<div class="empty">Noch keine Übungen in diesem Kurs.</div>'}</div>
+    <div class="card form">
+      <h2>${F.id ? 'Übung bearbeiten' : 'Neue Übung'}</h2>
+      <div class="grid g2" style="gap:12px">
+        <div class="f"><label for="fTitle">Titel *</label><input class="input" id="fTitle" value="${esc(e.title)}" maxlength="80"></div>
+        <div class="f"><label for="fCourse">Kurs</label><select class="input" id="fCourse">${A.courses.map(o => `<option value="${o.id}" ${(e.courseId || A.cid) === o.id ? 'selected' : ''}>${esc(o.name)}</option>`).join('')}</select></div>
+      </div>
+      <div class="f"><label>Foto</label><div class="drop" id="drop" data-act="img-pick">${formImg() ? `<img src="${formImg()}" alt="">` : '<b>Foto hierher ziehen</b><span>oder klicken zum Auswählen</span>'}</div>
+        <div class="row" style="margin-top:6px">${formImg() ? '<button class="link small" data-act="img-remove" style="color:var(--red)">Foto entfernen</button>' : ''}<span class="hint">Am besten Querformat. Wird automatisch verkleinert.</span></div>
+        <input type="file" id="fFile" accept="image/*" hidden></div>
+      <div class="f"><label for="fFreq">Häufigkeit <span class="muted">(optional)</span></label><input class="input" id="fFreq" value="${esc(e.freq)}" placeholder="z. B. Täglich 3 Minuten"></div>
+      <div class="f"><label for="fIntro">Einleitung / Ziel <span class="muted">(optional)</span></label><textarea class="input" id="fIntro" rows="3">${esc(e.intro)}</textarea><div class="hint">Leerzeile = neuer Absatz</div></div>
+      <div class="f"><label for="fSteps">Schritte <span class="muted">– ein Schritt pro Zeile</span></label><textarea class="input" id="fSteps" rows="6">${esc(e.steps)}</textarea>
+        <label class="check" style="margin-top:6px"><input type="checkbox" id="fNum" ${e.numbered ? 'checked' : ''}> Schritte nummerieren</label></div>
+      <div class="grid g2" style="gap:12px">
+        <div class="f"><label for="fExTitle">Zusätzliche Liste: Titel <span class="muted">(optional)</span></label><input class="input" id="fExTitle" value="${esc(e.extraTitle)}" placeholder="z. B. Steigere langsam die Schwierigkeit:"></div>
+        <div class="f"><label for="fExtra">Punkte <span class="muted">– einer pro Zeile</span></label><textarea class="input" id="fExtra" rows="3">${esc(e.extra)}</textarea></div>
+      </div>
+      <div class="f"><label for="fNote">Hinweis am Schluss <span class="muted">(optional)</span></label><textarea class="input" id="fNote" rows="2">${esc(e.note)}</textarea></div>
+      <label class="check" style="margin-bottom:16px"><input type="checkbox" id="fHidden" ${e.hidden ? 'checked' : ''}> Ausgeblendet (Teilnehmer sehen die Übung nicht)</label>
+      <div class="row" style="justify-content:space-between"><div class="row"><button class="btn" data-act="ex-save">Speichern</button>${F.id ? '<button class="btn ghost" data-act="ex-new">Abbrechen</button>' : ''}</div>
+        ${F.id ? '<button class="btn danger" data-act="ex-del">Übung löschen</button>' : ''}</div>
+    </div>
+    <div class="preview"><div class="muted small" style="margin-bottom:6px;text-align:center">Vorschau auf dem Handy</div><div id="prev">${previewHTML(F.cur || {}, formImg())}</div></div>
+  </div>`;
+}
+function viewCodes() {
+  return `<div class="head"><h1>Trainer-Codes</h1><button class="btn" data-act="tcode-new">+ Neuer Trainer-Code</button></div>
+  <p class="muted" style="margin-top:-8px">Mit einem Trainer-Code kann eine Trainerin Kurse und Übungen verwalten – am Handy und hier am PC. Deaktivierst du einen Code, verliert sie sofort die Rechte.</p>
+  ${A.codes.length ? `<div class="tablewrap"><table class="t"><thead><tr><th>Name</th><th>Code</th><th>Status</th><th></th></tr></thead><tbody>
+    ${A.codes.map(t => `<tr><td><b>${esc(t.name)}</b></td><td><span class="code" style="font-size:18px">${esc(t.id)}</span></td><td><span class="chip ${t.active ? 'st-k3' : 'st-k1'}">${t.active ? 'aktiv' : 'deaktiviert'}</span></td>
+      <td style="text-align:right"><button class="btn ${t.active ? 'ghost' : ''} sm" data-act="tcode-toggle" data-id="${esc(t.id)}" data-a="${t.active ? 1 : 0}">${t.active ? 'Deaktivieren' : 'Aktivieren'}</button></td></tr>`).join('')}
+  </tbody></table></div>` : '<div class="empty">Noch keine Trainer-Codes.</div>'}`;
+}
+function render() {
+  if (role === undefined) { $('#root').innerHTML = '<div class="empty" style="margin-top:20vh">Wird geladen …</div>'; return; }
+  if (!Cloud.configured) { $('#root').innerHTML = '<div class="empty">Firebase ist nicht eingerichtet.</div>'; return; }
+  if (!role || !role.role) { $('#root').innerHTML = viewLogin(); return; }
+  const master = role.role === 'master';
+  const nav = [['kurse', '🏠', 'Kurse'], ['uebersicht', '📊', 'Übersicht'], ['teilnehmer', '🐕', 'Teilnehmer'], ['uebungen', '📝', 'Übungen']].concat(master ? [['codes', '🔑', 'Trainer-Codes']] : []);
+  const v = { kurse: viewKurse, uebersicht: viewUebersicht, teilnehmer: viewTeilnehmer, uebungen: viewUebungen, codes: viewCodes }[A.view];
+  const y = window.scrollY;
+  $('#root').innerHTML = `<div class="app"><aside>
+    <div class="brand"><img src="icon-192.png" alt=""><div><b>Hunde-Click</b><small>Verwaltung</small></div></div>
+    ${nav.map(([k, i, t]) => `<button class="nav ${A.view === k ? 'on' : ''}" data-act="nav" data-v="${k}"><span>${i}</span>${t}</button>`).join('')}
+    <a class="nav" href="${appBase}" target="_blank" style="text-decoration:none"><span>📱</span>App öffnen</a>
+    <div class="who">Angemeldet als<b>${master ? 'Master' : 'Trainerin' + (role.name ? ' · ' + esc(role.name) : '')}</b><button class="link small" data-act="logout">Abmelden</button></div>
+  </aside><main>${v()}</main></div>`;
+  window.scrollTo(0, y);
+  bindDrop();
+}
+
+// ---------- Foto ----------
+function resizeImage(file) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => {
+      const s = Math.min(1, 1000 / Math.max(img.naturalWidth, img.naturalHeight));
+      const c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      let q = 0.78, d = c.toDataURL('image/jpeg', q);
+      while (d.length > 300000 && q > 0.4) { q -= 0.08; d = c.toDataURL('image/jpeg', q); }
+      URL.revokeObjectURL(img.src); res(d);
+    };
+    img.onerror = () => rej(new Error('Das Bild konnte nicht gelesen werden.'));
+    img.src = URL.createObjectURL(file);
+  });
+}
+async function takeFile(f) {
+  if (!f || !f.type.startsWith('image/')) { toast('Bitte eine Bilddatei wählen.'); return; }
+  try { const keep = formData(); F.img = await resizeImage(f); F.cur = Object.assign({}, F.cur || {}, keep); render(); toast(`Foto verkleinert auf ${Math.round(F.img.length * 0.75 / 1024)} KB`); }
+  catch (e) { toast(errMsg(e)); }
+}
+function bindDrop() {
+  const d = $('#drop'); if (!d) return;
+  d.addEventListener('dragover', e => { e.preventDefault(); d.classList.add('over'); });
+  d.addEventListener('dragleave', () => d.classList.remove('over'));
+  d.addEventListener('drop', e => { e.preventDefault(); d.classList.remove('over'); takeFile(e.dataTransfer.files[0]); });
+}
+
+// ---------- Aushang ----------
+function printPoster(c) {
+  $('#print').innerHTML = `<img class="logo" src="icon-512.png" alt=""><h1>${esc(c.name)}</h1><div class="sub">Hunde-Click · Übungs-App zum Kurs</div>
+    <div class="q">${Cloud.qrSvg(joinLink(c.code), 8)}</div><div class="c">${esc(c.code)}</div>
+    <ol><li>QR-Code mit der Handy-Kamera scannen.</li><li>App auf den Home-Bildschirm legen (iPhone: Teilen → «Zum Home-Bildschirm»; Android: Menü ⋮ → «App installieren»).</li><li>App über das Symbol öffnen, Hundename eingeben – fertig.</li></ol>
+    <div class="foot">${esc(joinLink(c.code))}</div>`;
+  setTimeout(() => window.print(), 300);
+}
+
+// ---------- Ereignisse ----------
+document.addEventListener('click', async ev => {
+  const b = ev.target.closest('[data-act]'); if (!b || b.disabled) return;
+  const id = b.dataset.id;
+  switch (b.dataset.act) {
+    case 'redeem': await busy(b, async () => { await Cloud.redeemCode($('#code').value); await start(); }); break;
+    case 'logout': if (confirm('Verwaltungsrechte in diesem Browser entfernen?')) { await busy(b, () => Cloud.dropRole()); role = null; render(); } break;
+    case 'nav': A.view = b.dataset.v; if (A.view === 'uebungen') F = null; render(); window.scrollTo(0, 0); break;
+    case 'go': A.cid = id; A.view = b.dataset.v; F = null; render(); window.scrollTo(0, 0); break;
+    case 'rank': A.rank = b.dataset.v; render(); break;
+    case 'pick': if (!id) A.pick = new Set(); else { A.pick = A.pick || new Set(); A.pick.has(id) ? A.pick.delete(id) : A.pick.add(id); } render(); break;
+    case 'refresh': await busy(b, async () => { await reloadMembers(); render(); toast('Aktualisiert'); }); break;
+    case 'course-new': { const n = prompt('Name des neuen Kurses (z. B. Welpen, Jagen, Tierheimkunde)'); if (n && n.trim()) await busy(b, async () => { const nid = await Cloud.createCourse(n); A.cid = nid; await loadAll(); toast(`Kurs «${n.trim()}» angelegt`); }); break; }
+    case 'rename': { const c = A.courses.find(x => x.id === id); const n = prompt('Neuer Name des Kurses', c.name); if (n && n.trim()) await busy(b, async () => { await Cloud.renameCourse(id, n); c.name = n.trim(); render(); }); break; }
+    case 'print': printPoster(A.courses.find(x => x.id === id)); break;
+    case 'ranking-reset': { const c = course(); if (confirm(`Gesamt-Rangliste von «${c.name}» neu starten? Alle beginnen wieder bei 0 XP. Training und Level der Teilnehmer bleiben erhalten.`)) await busy(b, async () => { await Cloud.resetRanking(c.id, c.season || 1); c.season = (c.season || 1) + 1; render(); toast('Rangliste neu gestartet'); }); break; }
+    case 'remove': if (confirm(`${b.dataset.dog} aus dem Kurs entfernen? Der Teilnehmer kann diesem Kurs danach nicht mehr beitreten.`)) await busy(b, async () => { await Cloud.removeMember(A.cid, id); await reloadMembers(); render(); toast('Entfernt'); }); break;
+    case 'tcode-new': { const n = prompt('Für wen ist der Trainer-Code? (Name)'); if (n && n.trim()) await busy(b, async () => { const code = await Cloud.createTrainerCode(n, []); A.codes = (await Cloud.trainerCodes()).sort((a, b2) => (a.created || 0) - (b2.created || 0)); render(); toast('Trainer-Code ' + code + ' erstellt'); }); break; }
+    case 'tcode-toggle': await busy(b, async () => { await Cloud.setTrainerCode(id, { active: b.dataset.a !== '1' }); const t = A.codes.find(x => x.id === id); t.active = b.dataset.a !== '1'; render(); }); break;
+    case 'ex-open': if (ev.target.closest('.mv')) break; F = { id, img: undefined, cur: A.ex.find(x => x.id === id) }; render(); break;
+    case 'ex-new': F = { id: null, img: undefined, cur: null }; render(); $('#fTitle').focus(); break;
+    case 'img-pick': $('#fFile').click(); break;
+    case 'img-remove': { const keep = formData(); F.img = null; F.cur = Object.assign({}, F.cur || {}, keep, { imgV: 0, imgUrl: '' }); render(); break; }
+    case 'ex-save': {
+      const d = formData();
+      if (!d.title) { toast('Bitte einen Titel eingeben.'); break; }
+      const old = F.id ? A.ex.find(x => x.id === F.id) : null;
+      if (!old || old.courseId !== d.courseId) d.order = courseEx(d.courseId).reduce((m, x) => Math.max(m, x.order || 0), 0) + 1;
+      if (F.img !== undefined) d.imgUrl = '';
+      await busy(b, async () => {
+        const nid = await Cloud.saveExercise(F.id, d, F.img);
+        if (typeof F.img === 'string') A.img[nid] = F.img;
+        await reloadEx(); A.cid = d.courseId; F = { id: nid, img: undefined, cur: A.ex.find(x => x.id === nid) }; render(); toast('Gespeichert');
+      });
+      break;
+    }
+    case 'ex-del': if (confirm('Diese Übung endgültig löschen?')) await busy(b, async () => { await Cloud.deleteExercise(F.id); await reloadEx(); F = null; render(); toast('Gelöscht'); }); break;
+    case 'ex-move': {
+      const list = courseEx(), i = list.findIndex(x => x.id === id), j = i + Number(b.dataset.dir);
+      if (j < 0 || j >= list.length) break;
+      [list[i], list[j]] = [list[j], list[i]];
+      await busy(b, async () => { await Cloud.updateExercises(list.map((x, k) => ({ id: x.id, data: { order: k + 1 } })).filter((c, k) => list[k].order !== k + 1)); await reloadEx(); render(); });
+      break;
+    }
+  }
+});
+document.addEventListener('change', async ev => {
+  const t = ev.target;
+  if (t.id === 'cid') { A.cid = t.value; F = null; render(); return; }
+  if (t.id === 'fFile' && t.files[0]) { takeFile(t.files[0]); t.value = ''; return; }
+  if (t.dataset.move && t.value) {
+    const to = A.courses.find(c => c.id === t.value), m = (A.members[A.cid] || []).find(x => x.id === t.dataset.move);
+    if (!confirm(`${m.dog} in den Kurs «${to.name}» verschieben? Das Handy wechselt beim nächsten Öffnen der App.`)) { t.value = ''; return; }
+    try { await Cloud.moveMember(A.cid, m.id, to.id); await reloadMembers(); await reloadMembers(to.id); render(); toast('Verschoben'); } catch (e) { toast(errMsg(e)); t.value = ''; }
+  }
+});
+document.addEventListener('input', ev => {
+  if (!ev.target.closest('.form')) return;
+  const p = $('#prev'); if (p) p.innerHTML = previewHTML(formData(), formImg());
+});
+document.addEventListener('keydown', ev => { if (ev.key === 'Enter' && ev.target.id === 'code') $('[data-act="redeem"]').click(); });
+
+async function start() {
+  role = undefined; render();
+  try { role = Cloud.configured ? await Cloud.myRole() : null; } catch (e) { role = null; }
+  render();
+  if (role && role.role) { try { await loadAll(); } catch (e) { toast(errMsg(e)); } }
+}
+start();
+</script>
+</body>
+</html>
