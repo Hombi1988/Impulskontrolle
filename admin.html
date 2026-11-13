@@ -225,9 +225,17 @@ function viewUebersicht() {
   const active = all.filter(m => m.last && daysSince(m.last) <= 7).length;
   const ups = all.reduce((s, m) => s + (m.week === wk ? m.weekUps || 0 : 0), 0);
   const weak = exs.map(e => ({ e, n: ms.filter(m => (m.status || {})[e.id] === 1).length })).filter(x => x.n).sort((a, b) => b.n - a.n).slice(0, 3);
-  const picker = all.length > 1 ? `<div class="row" style="margin-bottom:12px"><button class="btn ${A.pick.size ? 'ghost' : ''} sm" data-act="pick" data-id="">Alle</button>${all.map(m => `<button class="btn ${A.pick.has(m.id) ? '' : 'ghost'} sm" data-act="pick" data-id="${m.id}">${esc(m.dog)}</button>`).join('')}</div>` : '';
+  let rows = exs;
+  if (A.sort && A.sort !== 'kurs') {
+    const score = e => { const v = ms.map(m => (m.status || {})[e.id] || 0).filter(k => k > 0); return v.length ? v.reduce((s, k) => s + k, 0) / v.length : null; };
+    const sc = new Map(exs.map(e => [e.id, score(e)]));
+    const dir = A.sort === 'weak' ? 1 : -1;
+    rows = [...exs].sort((a, b) => { const x = sc.get(a.id), y = sc.get(b.id); if (x === null || y === null) return (x === null) - (y === null); return (x - y) * dir; });
+  }
+  const sorter = `<div class="row" style="margin-bottom:10px"><span class="muted small" style="font-weight:600">Reihenfolge</span>${[['kurs', 'Kurs'], ['weak', 'Schwächste zuerst'], ['strong', 'Stärkste zuerst']].map(([k, t]) => `<button class="btn ${(A.sort || 'kurs') === k ? '' : 'ghost'} sm" data-act="sort" data-v="${k}">${t}</button>`).join('')}</div>`;
+  const picker = sorter + (all.length > 1 ? `<div class="row" style="margin-bottom:12px"><span class="muted small" style="font-weight:600">Hunde</span><button class="btn ${A.pick.size ? 'ghost' : ''} sm" data-act="pick" data-id="">Alle</button>${all.map(m => `<button class="btn ${A.pick.has(m.id) ? '' : 'ghost'} sm" data-act="pick" data-id="${m.id}">${esc(m.dog)}</button>`).join('')}</div>` : '');
   const grid = exs.length && ms.length ? `${picker}<div class="mx-wrap"><table class="mx"><thead><tr><th>Übung</th>${ms.map(m => `<th>${esc(m.dog)}</th>`).join('')}<th>Sitzt bei</th></tr></thead><tbody>
-    ${exs.map(e => { const n4 = ms.filter(m => (m.status || {})[e.id] >= 3).length; return `<tr><th>${esc(e.title)}</th>${ms.map(m => { const k = (m.status || {})[e.id] || 0; return `<td title="${esc(m.dog)}: ${STATUS[k]}"><i class="sq k${k}"></i></td>`; }).join('')}<td class="sum">${n4} von ${ms.length}</td></tr>`; }).join('')}
+    ${rows.map(e => { const n4 = ms.filter(m => (m.status || {})[e.id] >= 3).length; return `<tr><th>${esc(e.title)}</th>${ms.map(m => { const k = (m.status || {})[e.id] || 0; return `<td title="${esc(m.dog)}: ${STATUS[k]}"><i class="sq k${k}"></i></td>`; }).join('')}<td class="sum">${n4} von ${ms.length}</td></tr>`; }).join('')}
     </tbody></table></div>
     <div class="legend"><span><i class="k4"></i>Sitzt</span><span><i class="k3"></i>Gut dabei</span><span><i class="k2"></i>Im Aufbau</span><span><i class="k1"></i>Braucht Training</span><span><i class="k0"></i>Neu</span><span>· «Sitzt bei» zählt «Gut dabei» und «Sitzt»</span></div>` : '<p class="muted">Noch keine Daten.</p>';
   return `<div class="head"><h1>Übersicht</h1><div class="row">${courseSelect()}<button class="btn ghost" data-act="refresh">Aktualisieren</button></div></div>
@@ -387,6 +395,7 @@ document.addEventListener('click', async ev => {
     case 'nav': A.view = b.dataset.v; if (A.view === 'uebungen') F = null; render(); window.scrollTo(0, 0); break;
     case 'go': A.cid = id; A.view = b.dataset.v; F = null; render(); window.scrollTo(0, 0); break;
     case 'rank': A.rank = b.dataset.v; render(); break;
+    case 'sort': A.sort = b.dataset.v; render(); break;
     case 'pick': if (!id) A.pick = new Set(); else { A.pick = A.pick || new Set(); A.pick.has(id) ? A.pick.delete(id) : A.pick.add(id); } render(); break;
     case 'refresh': await busy(b, async () => { await reloadMembers(); render(); toast('Aktualisiert'); }); break;
     case 'course-new': { const n = prompt('Name des neuen Kurses (z. B. Welpen, Jagen, Tierheimkunde)'); if (n && n.trim()) await busy(b, async () => { const nid = await Cloud.createCourse(n); A.cid = nid; await loadAll(); toast(`Kurs «${n.trim()}» angelegt`); }); break; }
