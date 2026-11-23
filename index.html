@@ -200,6 +200,7 @@ details.ex .ex-img{border-radius:12px;margin-bottom:4px}
 .gate-box{text-align:left;border:1px solid #E4E9E7;border-radius:16px;padding:14px 16px;margin:12px 0;font-size:15px}
 .gate-box p{margin:0}.gate-box ol{margin:6px 0 6px;padding-left:20px}.gate-box li{margin-bottom:4px}
 .gate .link{margin-top:14px;font-size:13px}
+.gate a{color:var(--accent);font-weight:600}
 .code-in{text-transform:uppercase;letter-spacing:2px;font-weight:600}
 .code-in::placeholder{text-transform:none;letter-spacing:0;font-weight:400}
 .kurs-h{margin-top:18px!important}
@@ -1478,6 +1479,22 @@ function browserGate() {
     : isChrome
     ? '<ol><li>Oben rechts auf das Menü <b>⋮</b> tippen.</li><li><b>«App installieren»</b> bzw. «Zum Startbildschirm hinzufügen» wählen.</li>' + last
     : '<ol><li>Öffne das <b>Menü</b> deines Browsers.</li><li><b>«Zum Startbildschirm hinzufügen»</b> oder <b>«App installieren»</b> wählen.</li>' + last;
+  const mobile = isIOS || isAndroid;
+  const appUrl = location.origin + location.pathname.replace(/index\.html$/, '');
+  if (!mobile) {
+    document.body.innerHTML = `<div class="gate">
+    <img src="icon-192.png" alt="" class="gate-logo">
+    <h1>Hunde-Click ist eine Handy-App</h1>
+    <p>Bitte öffne Hunde-Click auf deinem Handy – am einfachsten, indem du den QR-Code deiner Trainerin mit der Handy-Kamera scannst.</p>
+    ${k ? `<div class="gate-code"><span>Dein Kurscode</span><b>${esc(k)}</b><small>Diesen Code gibst du in der App auf dem Handy ein.</small></div>` : ''}
+    <div class="gate-box"><h2>Ohne QR-Code?</h2><p>Gib auf dem Handy diese Adresse im Browser ein:<br><b>${esc(appUrl.replace(/^https?:\/\//, ''))}</b></p></div>
+    <div class="gate-box"><h2>Trainerin oder Administrator?</h2><p>Die Verwaltung am PC findest du hier: <a href="admin.html">Zur Verwaltung</a></p></div>
+    ${hasBrowserData ? '<button class="link" id="gateGo">Ich nutze die App bisher am PC – hier weitermachen</button>' : ''}
+  </div>`;
+    const g0 = document.getElementById('gateGo');
+    if (g0) g0.onclick = () => { sessionStorage.setItem('hc.browserOk', '1'); location.reload(); };
+    return;
+  }
   document.body.innerHTML = `<div class="gate">
     <img src="icon-192.png" alt="" class="gate-logo">
     <h1>Fast geschafft!</h1>
@@ -1491,7 +1508,8 @@ function browserGate() {
   if (g) g.onclick = () => { sessionStorage.setItem('hc.browserOk', '1'); location.reload(); };
 }
 let browserOk = false; try { browserOk = sessionStorage.getItem('hc.browserOk') === '1'; } catch (e) {}
-const gated = (isIOS || isAndroid) && !isStandalone && !browserOk;
+const devTest = location.hostname === 'localhost' && /[?&]emu=1/.test(location.search) && !(isIOS || isAndroid);
+const gated = !isStandalone && !browserOk && !devTest;
 if (gated) browserGate(); else {
 applyExercises();
 render();

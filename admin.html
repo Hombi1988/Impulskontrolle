@@ -341,7 +341,6 @@ function render() {
   $('#root').innerHTML = `<div class="app"><aside>
     <div class="brand"><img src="icon-192.png" alt=""><div><b>Hunde-Click</b><small>Verwaltung</small></div></div>
     ${nav.map(([k, i, t]) => `<button class="nav ${A.view === k ? 'on' : ''}" data-act="nav" data-v="${k}"><span>${i}</span>${t}</button>`).join('')}
-    <a class="nav" href="${appBase}" target="_blank" style="text-decoration:none"><span>📱</span>App öffnen</a>
     <div class="who">Angemeldet als<b>${master ? 'Master' : 'Trainerin' + (role.name ? ' · ' + esc(role.name) : '')}</b><button class="link small" data-act="logout">Abmelden</button></div>
   </aside><main>${v()}</main></div>`;
   window.scrollTo(0, y);
