@@ -1468,9 +1468,16 @@ const isStandalone = (window.matchMedia && matchMedia('(display-mode: standalone
 const hasBrowserData = Object.keys(S.cs || {}).length > 0;
 function browserGate() {
   const k = (new URLSearchParams(location.search).get('kurs') || '').toUpperCase();
+  const isSamsung = /SamsungBrowser/i.test(UA);
+  const isChrome = /Chrome\//.test(UA) && !/SamsungBrowser|EdgA|OPR|Firefox|MiuiBrowser|HuaweiBrowser|YaBrowser|wv\)/i.test(UA);
+  const last = '<li>Browser schliessen und Hunde-Click über das neue Symbol öffnen.</li></ol>';
   const how = isIOS
-    ? '<ol><li>Unten auf <b>Teilen</b> tippen (Quadrat mit Pfeil).</li><li><b>«Zum Home-Bildschirm»</b> wählen und hinzufügen.</li><li>Browser schliessen und Hunde-Click über das neue Symbol öffnen.</li></ol>'
-    : '<ol><li>Oben rechts auf das Menü <b>⋮</b> tippen.</li><li><b>«App installieren»</b> bzw. «Zum Startbildschirm hinzufügen» wählen.</li><li>Browser schliessen und Hunde-Click über das neue Symbol öffnen.</li></ol>';
+    ? '<ol><li>Unten auf <b>Teilen</b> tippen (Quadrat mit Pfeil).</li><li><b>«Zum Home-Bildschirm»</b> wählen und hinzufügen.</li>' + last
+    : isSamsung
+    ? '<ol><li>Unten rechts auf das Menü <b>≡</b> tippen.</li><li><b>«Seite hinzufügen zu»</b> und dann <b>«Startbildschirm»</b> wählen.</li>' + last
+    : isChrome
+    ? '<ol><li>Oben rechts auf das Menü <b>⋮</b> tippen.</li><li><b>«App installieren»</b> bzw. «Zum Startbildschirm hinzufügen» wählen.</li>' + last
+    : '<ol><li>Öffne das <b>Menü</b> deines Browsers.</li><li><b>«Zum Startbildschirm hinzufügen»</b> oder <b>«App installieren»</b> wählen.</li>' + last;
   document.body.innerHTML = `<div class="gate">
     <img src="icon-192.png" alt="" class="gate-logo">
     <h1>Fast geschafft!</h1>
