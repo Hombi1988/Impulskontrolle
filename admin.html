@@ -380,7 +380,7 @@ function bindDrop() {
 function printPoster(c) {
   $('#print').innerHTML = `<img class="logo" src="icon-512.png" alt=""><h1>${esc(c.name)}</h1><div class="sub">Hunde-Click · Übungs-App zum Kurs</div>
     <div class="q">${Cloud.qrSvg(joinLink(c.code), 8)}</div><div class="c">${esc(c.code)}</div>
-    <ol><li>QR-Code mit der Handy-Kamera scannen.</li><li>App auf den Home-Bildschirm legen (iPhone: Teilen → «Zum Home-Bildschirm»; Android: Menü ⋮ → «App installieren»).</li><li>App über das Symbol öffnen, Hundename eingeben – fertig.</li></ol>
+    <ol><li>QR-Code mit der Handy-Kamera scannen.</li><li>App auf den Home-Bildschirm legen (iPhone: Teilen → «Zum Home-Bildschirm»; Android: Menü ⋮ → «App installieren»).</li><li>App über das Symbol öffnen, Hundename und Kurscode eingeben – fertig.</li></ol>
     <div class="foot">${esc(joinLink(c.code))}</div>`;
   setTimeout(() => window.print(), 300);
 }

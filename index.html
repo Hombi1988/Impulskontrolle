@@ -190,6 +190,16 @@ details.ex .ex-img{border-radius:12px;margin-bottom:4px}
   max-width:calc(100% - 32px);text-align:center;animation:fade .2s}
 .empty{text-align:center;padding:40px 10px;color:var(--muted)}
 .tabs button{font-size:10.5px}
+.gate{max-width:440px;margin:0 auto;padding:36px 20px 40px;text-align:center;line-height:1.45}
+.gate-logo{width:76px;height:76px;border-radius:20px}
+.gate h1{font-size:26px;margin:14px 0 6px}
+.gate h2{font-size:16px;margin:0 0 6px}
+.gate-code{background:var(--accent-l,#E6F1EE);border-radius:16px;padding:14px;margin:18px 0}
+.gate-code span,.gate-code small{display:block;font-size:13px;color:#5d6b68}
+.gate-code b{display:block;font-size:34px;letter-spacing:4px;margin:4px 0}
+.gate-box{text-align:left;border:1px solid #E4E9E7;border-radius:16px;padding:14px 16px;margin:12px 0;font-size:15px}
+.gate-box p{margin:0}.gate-box ol{margin:6px 0 6px;padding-left:20px}.gate-box li{margin-bottom:4px}
+.gate .link{margin-top:14px;font-size:13px}
 .code-in{text-transform:uppercase;letter-spacing:2px;font-weight:600}
 .code-in::placeholder{text-transform:none;letter-spacing:0;font-weight:400}
 .kurs-h{margin-top:18px!important}
@@ -1066,7 +1076,7 @@ function joinCardHTML() {
   if (!Cloud.configured) return `<div class="empty">Die Kursfunktionen sind noch nicht eingerichtet.</div>`;
   return `<div class="card">
     <h3 style="margin:0 0 6px">Kurs beitreten</h3>
-    <p class="muted small" style="margin:0 0 12px">Den Kurscode bekommst du von deiner Trainerin – oder scanne ihren QR-Code.</p>
+    <p class="muted small" style="margin:0 0 12px">Den Kurscode bekommst du von deiner Trainerin.</p>
     ${joinFields(!dogName())}
     <button class="btn" data-act="join">Beitreten</button>
     <p class="muted small" style="margin:12px 0 0">Im Kurs sehen die anderen nur den Namen deines Hundes, den Stand pro Übung und deine Punkte für die Rangliste.</p></div>`;
@@ -1450,12 +1460,40 @@ function startSync() {
   })().finally(() => { syncRun = null; if (!T) render(); });
   return syncRun;
 }
+// Auf dem Handy nur als installierte App verwenden (Browser und App haben auf dem iPhone getrennte Daten)
+const UA = navigator.userAgent;
+const isIOS = /iPhone|iPad|iPod/i.test(UA) || (/Macintosh/.test(UA) && navigator.maxTouchPoints > 1);
+const isAndroid = /Android/i.test(UA);
+const isStandalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+const hasBrowserData = Object.keys(S.cs || {}).length > 0;
+function browserGate() {
+  const k = (new URLSearchParams(location.search).get('kurs') || '').toUpperCase();
+  const how = isIOS
+    ? '<ol><li>Unten auf <b>Teilen</b> tippen (Quadrat mit Pfeil).</li><li><b>«Zum Home-Bildschirm»</b> wählen und hinzufügen.</li><li>Browser schliessen und Hunde-Click über das neue Symbol öffnen.</li></ol>'
+    : '<ol><li>Oben rechts auf das Menü <b>⋮</b> tippen.</li><li><b>«App installieren»</b> bzw. «Zum Startbildschirm hinzufügen» wählen.</li><li>Browser schliessen und Hunde-Click über das neue Symbol öffnen.</li></ol>';
+  document.body.innerHTML = `<div class="gate">
+    <img src="icon-192.png" alt="" class="gate-logo">
+    <h1>Fast geschafft!</h1>
+    <p>Hunde-Click funktioniert nur als App. Du bist gerade im Browser.</p>
+    ${k ? `<div class="gate-code"><span>Dein Kurscode</span><b>${esc(k)}</b><small>Diesen Code gibst du in der App ein.</small></div>` : ''}
+    <div class="gate-box"><h2>Hast du die App schon?</h2><p>Schliesse den Browser und öffne <b>Hunde-Click über das Symbol</b> auf deinem Home-Bildschirm.${k ? ' Für einen weiteren Kurs tippst du dort auf <b>Einstellungen → «+ Kurs beitreten»</b> und gibst den Code ein.' : ''}</p></div>
+    <div class="gate-box"><h2>Noch nicht installiert?</h2>${how}${k ? '<p>Beim ersten Öffnen gibst du deinen Hundenamen und den Kurscode ein.</p>' : ''}</div>
+    ${hasBrowserData ? '<button class="link" id="gateGo">Ich nutze die App bisher im Browser – hier weitermachen</button>' : ''}
+  </div>`;
+  const g = document.getElementById('gateGo');
+  if (g) g.onclick = () => { sessionStorage.setItem('hc.browserOk', '1'); location.reload(); };
+}
+let browserOk = false; try { browserOk = sessionStorage.getItem('hc.browserOk') === '1'; } catch (e) {}
+const gated = (isIOS || isAndroid) && !isStandalone && !browserOk;
+if (gated) browserGate(); else {
 applyExercises();
 render();
 loadImagesFromIDB().then(() => { if (!T) render(); });
 startSync();
-const kursParam = new URLSearchParams(location.search).get('kurs');
-if (!S.settings.onboarded) showOnboarding();
+}
+const kursParam = gated ? null : new URLSearchParams(location.search).get('kurs');
+if (gated) {}
+else if (!S.settings.onboarded) showOnboarding();
 else if (kursParam && !Object.values(S.cs).some(c => c.code === kursParam.toUpperCase())) showJoinModal();
 </script>
 </body>
